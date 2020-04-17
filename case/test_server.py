@@ -44,5 +44,5 @@ class TestServer(unittest.TestCase):
         self.assertTrue(check in res_text)
 
 
-# if __name__ == "__main__":
-#      unittest.main()
+if __name__ == "__main__":
+     unittest.main()

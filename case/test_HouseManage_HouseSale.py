@@ -11,17 +11,13 @@ from config import *
 from common import add_clientkey_to_headers
 
 
-
-
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="获取经纪人下加密和推荐的房源数").dict_data()
+testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-登记").dict_data()
 print(testdata)
 
+
 @ddt.ddt
-class TestHouseManager(unittest.TestCase):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.headers = {}
+class HouseManage_HouseSale(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了
@@ -30,8 +26,26 @@ class TestHouseManager(unittest.TestCase):
         # print(header)
         cls.header = header
 
+    #删除登记后出售的房源
+    def tearDown(self):
+        if self.caseid > 0:
+            url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+            data = {
+                    "caseId": self.caseid,
+                    "caseType": "1",
+                    "isSaleLease": "0",
+                    "trackContent": "content",
+                    "trackType": "30"
+                }
+            r = requests.post(url=url, json=data, headers=self.header)
+            # print(r.json()["errCode"])
+            self.assertEqual(200, r.json()["errCode"])
+            print("登记出售房源已成功删除")
+        else:
+            print("登记出售房源失败，没有出售的房源可删除")
+
     @ddt.data(*testdata)
-    def test_updatefunsale(self, case):
+    def test_create_houseSale(self, case):
         case["headers"]=self.header
         # print(self.header)
 
@@ -42,27 +56,25 @@ class TestHouseManager(unittest.TestCase):
         res = base_api.send_requests(self.s,case)
 
         # 检查点 checkpoint
-        check = case["checkpoint"]  #获取检查点中的内容
+        check = case["checkpoint"]      #获取检查点中的内容
         check=json.loads(check)         #字符串转为字典
         print("检查点->：%s" % check)
-        # print(res)
-        # self.assertEqual(200,res.get("text"))
-        # self.assertEqual(0,res.get("status"))
 
 
         # 返回结果
         res_text = res["text"]          #获取响应的内容
         res_text=json.loads(res_text)   #将响应的内容转换为字典
         print("返回实际结果->：%s"%res_text)
+        self.caseid=res_text["data"]["caseId"]
+        # print(self.caseid)
 
 
         # 断言
-
         if "errMsg" not in res_text.keys():
             self.assertEqual(check.get("errCode"), res_text["errCode"])
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
 
-# if __name__ == "__main__":
-#      unittest.main()
+if __name__ == "__main__":
+     unittest.main()
