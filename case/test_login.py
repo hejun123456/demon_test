@@ -11,11 +11,8 @@ from common import readexcel
 from common import writeexcel
 from config import *
 
-
-
-#读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="登录接口").dict_data()
-
+# 读取出excel中的测试数据
+testdata = readexcel.ExcelUtil(EXCEL_PATH, sheetName="登录接口").dict_data()
 
 @ddt.ddt
 class TestLogin(unittest.TestCase):
@@ -24,16 +21,13 @@ class TestLogin(unittest.TestCase):
         # 如果有登录的话，就在这里先登录了
         cls.s = requests.session()
 
-         # 先复制excel数据到report
-         # writeexcel.copy_excel(EXCEL_PATH, RESULT_PATH)
-
     @ddt.data(*testdata)
-    def test_login(self, testdata):
-        res = base_api.send_requests(self.s,testdata)
+    def test_login(self, case):
+        res = base_api.send_requests(self.s,case)
         # base_api.wirte_result(res, filename=RESULT_PATH)
 
         # 检查点 checkpoint
-        check = testdata["checkpoint"]
+        check = case["checkpoint"]
         print("检查点->：%s"%check)
 
         # 返回结果
