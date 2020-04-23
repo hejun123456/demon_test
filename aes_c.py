@@ -39,21 +39,22 @@ def start1():
     aesEncode = lib.aesEncode
     aesEncode.restype = ctypes.c_char_p
     reStr = aesEncode('{"cityId": 1,"sId": 854598}')
-    print (reStr)
+    print(reStr)
     aesDecode = lib.aesDecode
     aesDecode.restype = ctypes.c_char_p
     reStr2 = aesDecode(reStr)
-    print (reStr2)
+    print(reStr2)
+
+
+aes_util = AesHelper()
 
 
 def start():
     aes_util = AesHelper()
     e_str = '{"cityId":"1","sId":"1626773"}'
-    print(u'参数：{0} 加密：{1}'.format(e_str, aes_util.encrypt(e_str)))
+    print('参数：{0} 加密：{1}'.format(e_str, aes_util.encrypt(e_str)))
     de_str = '707D094510F3A54B53D4EA80BB5BF714C0B43542C9F4E79EA2D2645D3A78F8FF'
-    print(u'参数：{1} 解密：{0}'.format(aes_util.decrypt(de_str), de_str))
-
-
+    print('参数：{1} 解密：{0}'.format(aes_util.decrypt(de_str), de_str))
 
 
 if __name__ == '__main__':

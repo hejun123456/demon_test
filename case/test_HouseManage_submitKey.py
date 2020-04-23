@@ -19,9 +19,7 @@ print(testdata)
 
 @ddt.ddt
 class TestHouseManager(unittest.TestCase):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.headers = {}
+
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了

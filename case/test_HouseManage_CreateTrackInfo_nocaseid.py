@@ -14,7 +14,7 @@ from common import add_clientkey_to_headers
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-登记").dict_data()
+testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-创建房源跟进日志(nocaseid)").dict_data()
 print(testdata)
 
 @ddt.ddt
@@ -31,13 +31,9 @@ class TestHouseManage(unittest.TestCase):
         cls.header = header
 
     @ddt.data(*testdata)
-    def test_create_house(self, testdata):
+    def test_getHouseSaleData(self, testdata):
         testdata["headers"]=self.header
-        # print(self.header)
 
-        # aes_util=AesHelper()
-        # testdata["body"]=aes_util.encrypt(testdata["body"])
-        # print(testdata["body"])
 
         res = base_api.send_requests(self.s,testdata)
 

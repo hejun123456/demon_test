@@ -21,12 +21,10 @@ print(testdata)
 
 @ddt.ddt
 class TestSoSo(unittest.TestCase):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.headers = {}
+
     @classmethod
     def setUpClass(cls):
-        # 如果有登录的话，就在这里先登录了
+        # 如果有登录的话，就在这里先登录
         cls.s = requests.session()
         header=add_clientkey_to_headers.get_clientkey()
         # print(header)
@@ -60,11 +58,16 @@ class TestSoSo(unittest.TestCase):
         print(a)
 
         # 断言
-        if "phone" not in a.keys():
-            self.assertEqual(check.get("errCode"),res_text["errCode"])
+        if "errMsg" not in res_text.keys():
+            if "data" not in res_text.keys():
+                self.assertEqual(check.get("errCode"), res_text["errCode"])
+            else:
+                self.assertEqual(check.get("phone"), a["phone"])
+                self.assertEqual(check.get("errCode"), res_text["errCode"])
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
-            self.assertEqual(int(check.get("phone")),len(a["phone"]))
+            self.assertEqual(check.get("errMsg"), res_text["errMsg"])
+            print("errMsg内容为：%s" % (res_text["errMsg"]))
 
 if __name__ == "__main__":
      unittest.main()

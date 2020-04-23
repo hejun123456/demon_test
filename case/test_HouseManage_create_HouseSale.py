@@ -9,56 +9,43 @@ from common import base_api
 from common import readexcel
 from config import *
 from common import add_clientkey_to_headers
-from common.HouseManage import HouseMansge
-
-
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-创建房源跟进日志").dict_data()
+testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-登记").dict_data()
 print(testdata)
 
 @ddt.ddt
-class HouseManage_CreateTrackSale(unittest.TestCase):
+class HouseManage_HouseSale(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了
         cls.s = requests.session()
-        cls.caseid,cls.headers=HouseMansge().create_houseSale()
+        header=add_clientkey_to_headers.get_clientkey()
+        # print(header)
+        cls.header = header
 
-    # 删除登记后出售的房源
-    @classmethod
-    def tearDownClass(cls):
-        cls.caseid = cls.caseid
-        cls.headers = cls.headers
-        if cls.caseid > 0:
-            # print(cls.caseid)
+    #删除登记后出售的房源
+    def tearDown(self):
+        if self.caseid > 0:
             url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
             data = {
-                "caseId": cls.caseid,
-                "caseType": "1",       # 1 代表出售房源
-                "isSaleLease": "0",    # 是否是租售房源，1=是，0=否  默认是0
-                "trackContent": "content",
-                "trackType": "30"      # 30 代表删除房源
-                    }
-            cls.r = requests.post(url=url, json=data, headers=cls.headers)
-            if cls.r.json()["errCode"] == 200:
-                print("登记出售房源已成功删除")
-            else:
-                print("登记的房源删除失败的原因：%s",(cls.r.json()["errMsg"]))
+                    "caseId": self.caseid,
+                    "caseType": "1",         # 1 代表出售房源
+                    "isSaleLease": "0",      # 是否是租售房源，1=是，0=否  默认是0
+                    "trackContent": "content",
+                    "trackType": "30"        # 30 代表删除房源
+                }
+            r = requests.post(url=url, json=data, headers=self.header)
+            # print(r.json()["errCode"])
+            self.assertEqual(200, r.json()["errCode"])
+            print("登记出售房源已成功删除")
         else:
             print("登记出售房源失败，没有出售的房源可删除")
 
     @ddt.data(*testdata)
-    def test_create_trackInfo(self, case):
-        case["headers"] = self.headers
-
-        # 将caseid重新写入excel中
-        a=json.loads(case["body"])
-        a["caseId"]=self.caseid
-        b=json.dumps(a)
-        case.update({"body":b})
-        print(case)
+    def test_create_houseSale(self, case):
+        case["headers"]=self.header
 
         res = base_api.send_requests(self.s,case)
 
@@ -72,8 +59,8 @@ class HouseManage_CreateTrackSale(unittest.TestCase):
         res_text = res["text"]          #获取响应的内容
         res_text=json.loads(res_text)   #将响应的内容转换为字典
         print("返回实际结果->：%s"%res_text)
-
-
+        self.caseid=res_text["data"]["caseId"]
+        # print(self.caseid)
 
         # 断言
         if "errMsg" not in res_text.keys():
@@ -81,9 +68,6 @@ class HouseManage_CreateTrackSale(unittest.TestCase):
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
-
-
-
 
 if __name__ == "__main__":
      unittest.main()

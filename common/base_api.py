@@ -7,7 +7,7 @@ import requests
 from common.readexcel import ExcelUtil
 from common.writeexcel import copy_excel, Write_excel
 from config import *
-import time
+
 
 def send_requests(s,testdata):
     # 封装requests请求方法

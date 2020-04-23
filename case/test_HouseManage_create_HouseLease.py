@@ -12,12 +12,11 @@ from common import add_clientkey_to_headers
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-登记").dict_data()
+testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出租-登记").dict_data()
 print(testdata)
 
-
 @ddt.ddt
-class HouseManage_HouseSale(unittest.TestCase):
+class HouseManage_HouseLease(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了
@@ -32,10 +31,10 @@ class HouseManage_HouseSale(unittest.TestCase):
             url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
             data = {
                     "caseId": self.caseid,
-                    "caseType": "1",
-                    "isSaleLease": "0",
+                    "caseType": "2",         # 1 代表出售房源 2 代表出租房源
+                    "isSaleLease": "0",      # 是否是租售房源，1=是，0=否  默认是0
                     "trackContent": "content",
-                    "trackType": "30"
+                    "trackType": "30"        # 30 代表删除房源
                 }
             r = requests.post(url=url, json=data, headers=self.header)
             # print(r.json()["errCode"])
@@ -45,19 +44,14 @@ class HouseManage_HouseSale(unittest.TestCase):
             print("登记出售房源失败，没有出售的房源可删除")
 
     @ddt.data(*testdata)
-    def test_create_houseSale(self, case):
+    def test_create_houseLease(self, case):
         case["headers"]=self.header
-        # print(self.header)
-
-        # aes_util=AesHelper()
-        # testdata["body"]=aes_util.encrypt(testdata["body"])
-        # print(testdata["body"])
 
         res = base_api.send_requests(self.s,case)
 
         # 检查点 checkpoint
         check = case["checkpoint"]      #获取检查点中的内容
-        check=json.loads(check)         #字符串转为字典
+        check=json.loads(check)         #json字符串转为字典
         print("检查点->：%s" % check)
 
 
@@ -67,7 +61,6 @@ class HouseManage_HouseSale(unittest.TestCase):
         print("返回实际结果->：%s"%res_text)
         self.caseid=res_text["data"]["caseId"]
         # print(self.caseid)
-
 
         # 断言
         if "errMsg" not in res_text.keys():

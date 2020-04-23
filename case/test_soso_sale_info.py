@@ -33,18 +33,14 @@ class TestSoSo(unittest.TestCase):
         cls.header = header
 
     @ddt.data(*testdata)
-    def test_soso_sale_info(self, testdata):
-        testdata["headers"]=self.header
+    def test_soso_sale_info(self, case):
+        case["headers"]=self.header
         # print(self.header)
 
-        # aes_util=AesHelper()
-        # testdata["body"]=aes_util.encrypt(testdata["body"])
-        # print(testdata["body"])
-
-        res = base_api.send_requests(self.s,testdata)
+        res = base_api.send_requests(self.s,case)
 
         # 检查点 checkpoint
-        check = testdata["checkpoint"]  #获取检查点中的内容
+        check = case["checkpoint"]  #获取检查点中的内容
         check=json.loads(check)         #字符串转为字典
         print("检查点->：%s" % check)
         # print(res)
@@ -58,8 +54,16 @@ class TestSoSo(unittest.TestCase):
         print("返回实际结果->：%s"%res_text)
 
         # 断言
-
-        self.assertEqual(check.get("errCode"),res_text["errCode"])
+        if "errMsg" not in res_text.keys():
+            if "data" not in res_text.keys():
+                self.assertEqual(check.get("errCode"), res_text["errCode"])
+            else:
+                self.assertEqual(check.get("repeatId"),res_text["data"]["repeatId"])
+                self.assertEqual(check.get("errCode"), res_text["errCode"])
+        else:
+            self.assertEqual(check.get("errCode"), res_text["errCode"])
+            self.assertEqual(check.get("errMsg"), res_text["errMsg"])
+            print("errMsg内容为：%s" %(res_text["errMsg"]))
 
 
 if __name__ == "__main__":
