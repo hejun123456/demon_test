@@ -1,8 +1,7 @@
 
 import requests
-from config import JPG_PATH
 from common import login_get_clientkey
-import json
+
 
 
 class AddImg():

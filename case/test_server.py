@@ -14,7 +14,7 @@ from config import *
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="服务器接口").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="服务器接口").dict_data()
 
 @ddt.ddt
 class TestServer(unittest.TestCase):

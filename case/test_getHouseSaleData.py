@@ -14,14 +14,12 @@ from common import add_clientkey_to_headers
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-查看房源详情").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="房源管理-出售-查看房源详情").dict_data()
 print(testdata)
 
 @ddt.ddt
 class TestHouseManage(unittest.TestCase):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.headers = {}
+
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了

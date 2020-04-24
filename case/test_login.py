@@ -9,11 +9,10 @@ import requests
 from aes_c import aes_util
 from common import base_api
 from common import readexcel
-from common import writeexcel
 from config import *
 
 # 读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH, sheetName="登录接口").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="登录接口").dict_data()
 print(testdata)
 
 @ddt.ddt

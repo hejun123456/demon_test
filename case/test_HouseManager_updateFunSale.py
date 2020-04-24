@@ -14,7 +14,7 @@ from common import add_clientkey_to_headers
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-更新房源标题").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="房源管理-出售-更新房源标题").dict_data()
 print(testdata)
 
 @ddt.ddt

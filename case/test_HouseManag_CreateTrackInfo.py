@@ -8,14 +8,13 @@ import requests,json
 from common import base_api
 from common import readexcel
 from config import *
-from common import add_clientkey_to_headers
 from common.HouseManage import HouseMansge
 
 
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="房源管理-出售-创建房源跟进日志").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="房源管理-出售-创建房源跟进日志").dict_data()
 print(testdata)
 
 @ddt.ddt

@@ -16,7 +16,7 @@ from aes_c import AesHelper
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH,sheetName="搜搜-查看出售房源的详细").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="搜搜-查看出售房源的详细").dict_data()
 print(testdata)
 
 @ddt.ddt

@@ -11,7 +11,7 @@ from config import *
 from common.HouseManage import HouseMansge
 
 # 读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(EXCEL_PATH, sheetName="房源管理-出售-网络推广").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售-网络推广").dict_data()
 print(testdata)
 
 
