@@ -45,9 +45,7 @@ class TestGetHouseFloor(unittest.TestCase):
         check = testdata["checkpoint"]  #获取检查点中的内容
         check=json.loads(check)         #字符串转为字典
         print("检查点->：%s" % check)
-        # print(res)
-        # self.assertEqual(200,res.get("text"))
-        # self.assertEqual(0,res.get("status"))
+
 
 
         # 返回结果
@@ -55,11 +53,11 @@ class TestGetHouseFloor(unittest.TestCase):
         res_text=json.loads(res_text)   #将响应的内容转换为字典
         print("返回实际结果->：%s"%res_text)
 
-
         # 断言
 
         if "errMsg" not in res_text.keys():
-            self.assertEqual(check.get("errCode"), res_text["errCode"])
+            self.assertEqual(check.get("buildName"),res_text["data"]["buildInfoVOS"][0]["buildName"])
+
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
@@ -67,5 +65,5 @@ class TestGetHouseFloor(unittest.TestCase):
 
 
 
-# if __name__ == "__main__":
-#      unittest.main()
+if __name__ == "__main__":
+     unittest.main()

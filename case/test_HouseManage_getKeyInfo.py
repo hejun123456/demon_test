@@ -19,9 +19,7 @@ print(testdata)
 
 @ddt.ddt
 class TestHouseManager(unittest.TestCase):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.headers = {}
+
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了
@@ -33,11 +31,6 @@ class TestHouseManager(unittest.TestCase):
     @ddt.data(*testdata)
     def test_getKeyInfo(self, testdata):
         testdata["headers"]=self.header
-        # print(self.header)
-
-        # aes_util=AesHelper()
-        # testdata["body"]=aes_util.encrypt(testdata["body"])
-        # print(testdata["body"])
 
         res = base_api.send_requests(self.s,testdata)
 

@@ -9,7 +9,7 @@ from common import base_api
 from common import readexcel
 from config import *
 from common import add_clientkey_to_headers
-from common.HouseManage import HouseMansge
+from common.HouseManage import HouseManage
 from common.fileupload import TestSendFile
 
 
@@ -22,7 +22,7 @@ class SunPan(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.s = requests.session()
-        housemanage=HouseMansge()
+        housemanage=HouseManage()
         cls.caseid,cls.header=housemanage.create_houseSale()
         #房堪
         url="http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"

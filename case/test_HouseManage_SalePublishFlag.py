@@ -8,7 +8,7 @@ import requests, json
 from common import base_api
 from common import readexcel
 from config import *
-from common.HouseManage import HouseMansge
+from common.HouseManage import HouseManage
 
 # 读取出excel中的测试数据
 testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售-网络推广").dict_data()
@@ -21,7 +21,7 @@ class HouseManage_SalePublishFlag(unittest.TestCase):
     def setUp(self):
         # 如果有登录的话，就在这里先登录了
         self.s = requests.session()
-        self.caseid, self.headers = HouseMansge().create_houseSale()
+        self.caseid, self.headers = HouseManage().create_houseSale()
 
     # 删除登记后出售的房源
     def tearDown(self):

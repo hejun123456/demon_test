@@ -12,7 +12,7 @@ from config import *
 
 
 
-def copy_excel(excelpath1=EXCEL_PATH, excelpath2=RESULT_PATH):
+def copy_excel(excelpath1=HOUSE_MANAGE_EXCEL_PATH, excelpath2=RESULT_PATH):
     '''复制excek，把excelpath1数据复制到excelpath2'''
     wb2 = openpyxl.Workbook()
     wb2.save(excelpath2)

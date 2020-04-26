@@ -8,7 +8,7 @@ from config import *
 
 
 def login():
-    data = ExcelUtil(EXCEL_PATH, sheetName="获取clientkey").dict_data()
+    data = ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="获取clientkey").dict_data()
     print(data[0])
     s = requests.session()
     res = send_requests(s, data[0])

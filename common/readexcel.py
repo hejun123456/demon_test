@@ -34,8 +34,8 @@ class ExcelUtil():
                 j += 1
         return r
 
-if __name__=="__main__":
-    excelpath = EXCEL_PATH
-    sheetName = "服务器接口"
-    data = ExcelUtil(excelpath, sheetName)
-    print(data.dict_data())
+# if __name__=="__main__":
+#     excelpath = HOUSE_MANAGE_EXCEL_PATH
+#     sheetName = "服务器接口"
+#     data = ExcelUtil(excelpath, sheetName)
+#     print(data.dict_data())

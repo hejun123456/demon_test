@@ -8,7 +8,7 @@ import requests,json
 from common import base_api
 from common import readexcel
 from config import *
-from common.HouseManage import HouseMansge
+from common.HouseManage import HouseManage
 
 
 
@@ -23,7 +23,7 @@ class HouseManage_CreateTrackSale(unittest.TestCase):
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了
         cls.s = requests.session()
-        cls.caseid,cls.headers=HouseMansge().create_houseSale()
+        cls.caseid,cls.headers=HouseManage().create_houseSale()
 
     # 删除登记后出售的房源
     @classmethod
