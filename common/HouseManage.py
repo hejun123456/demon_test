@@ -20,7 +20,21 @@ class HouseManage():
         print(headers)
         return res.json()["data"]["caseId"],headers
 
-    # 登记出租房源，并返回caseidhe headers
+    #删除出售中的房源
+    def delete_houseSale(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "1",     # 1 代表出售中的房源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "30"    # 30 代表删除房源
+        }
+        r = requests.post(url=url, json=data, headers=headers)
+        return r.json()["errCode"]
+
+    # 登记出租房源，并返回caseid和headers
     def create_houseLease(self):
         headers = add_clientkey_to_headers.get_clientkey()
         url = "http://hft.myfun7.com/houseWeb/funLease/createFunLease"
@@ -28,29 +42,22 @@ class HouseManage():
         data = json.loads(data[0]["body"])
 
         res = requests.post(url=url, headers=headers, json=data)
-        print(res.json())
         print(res.json()["data"]["caseId"])
-        print(headers)
         return res.json()["data"]["caseId"], headers
 
-    # 删除出售中的房源
-    def delete_houseSale(self, content):
-        # 获取登记后房源的id和headers信息
-        caseid, headers = self.create_houseSale()
-
-        # 删除登记的出售房源
+    #删除出租房源
+    def delete_leaseHouse(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
         url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
-        data = {"caseId": caseid,
-                "caseType": "1",
-                "isSaleLease": "0",
-                "trackContent": content,
-                "trackType": "30"
-                }
-        res = requests.post(url=url, json=data, headers=headers)
-        print(res.text)
-        print(res.json()["errCode"])
-        return res.json()["errCode"]
-
+        data = {
+            "caseId": caseid,
+            "caseType": "2",     # 2 代表出租中的房源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "30"  # 30 代表删除房源
+        }
+        r = requests.post(url=url, json=data, headers=headers)
+        return r.json()["errCode"]
 
     #获取楼盘信息
     def get_builId(self,para):

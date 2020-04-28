@@ -15,7 +15,6 @@ HOUSE_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"HouseManage_test_datas.xlsx")
 CUSTOMER_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"CustomerManage_test_datas.xlsx")
 
 
-
 COMMON_PATH=os.path.join(BASE_PATH,"common")
 
 
@@ -28,31 +27,3 @@ IMGDATA_PATH=os.path.join(BASE_PATH,"imgdata")
 
 JPG_PATH=os.path.join(IMGDATA_PATH,"1.jpg")
 # print(JPG_PATH)
-
-# s = '\xe9\x9d\x92\xe8\x9b\x99\xe7\x8e\x8b\xe5\xad\x90'
-# ss = s.encode('raw_unicode_escape')
-# print(ss)
-# sss = ss.decode()
-# print(sss)
-
-
-# import ddt
-# import unittest
-# data = [
-#     {'user':'11','psw':'1111'},
-#     {'user':'22','psw':'2222'},
-#     {'user':'33','psw':'3333'}
-# ]
-# @ddt.ddt
-# class Test(unittest.TestCase):
-#     @ddt.data(*data)
-#     #@ddt.data({'user':'11','psw':'1111'},
-#               #{'user':'22','psw':'2222'},
-#               #{'user':'33','psw':'3333'})
-#     def test_login(self, a):
-#         #使用参数a来接收数据
-#         print(a)
-#         print(a['user'],a['psw'])
-#
-# if __name__ == '__main__':
-#     unittest.main()

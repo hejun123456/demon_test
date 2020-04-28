@@ -1,25 +1,17 @@
 # coding:utf-8
 # 作者：hejun
 
-
 import unittest
 import ddt
 import requests,json
-from common import base_api
+from common import base_api,get_date
 from common import readexcel
 from config import *
 from common.HouseManage import HouseManage
 from common.CustomerManage import CustomerManage
 
-
-
-
-#读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH,sheetName="客源管理-求购-创建跟进日志").dict_data()
-print(testdata)
-
 @ddt.ddt
-class CustomerManage_CreateBuyCustomerTrack(unittest.TestCase):
+class CustomerManage_CreateBuyCustomerTrack_FengPanAndZanHuan(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，在这里先登录
@@ -27,7 +19,7 @@ class CustomerManage_CreateBuyCustomerTrack(unittest.TestCase):
         #创建一个出售中的房源，并获取到caseid
         cls.saleHouse_caseid,cls.saleHeaders=HouseManage().create_houseSale()
 
-        #创建一个求购客源，获取到caseis，用于后续创建跟进
+        #创建一个求购客源，获取到caseid，用于后续创建跟进
         cls.caseid,cls.headers=CustomerManage().create_BuyCustomer()
 
     # 删除登记后的求购客源以及登记的房源
@@ -73,33 +65,38 @@ class CustomerManage_CreateBuyCustomerTrack(unittest.TestCase):
                 print("登记出售房源删除失败的原因：%s",(cls.r.json()["errMsg"]))
         else:
             print("登记出售房源删除失败，没有登记的出售房源可删除")
+    # 求购客源封盘跟进日志
+    testdatas = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求购-创建封盘跟进").dict_data()
+    print(testdatas)
+    @ddt.data(*testdatas)
+    def test_create_buy_customer_fengpan_trackInfo(self, cases):
+        if "targetTime" in cases.keys():
+            cases["headers"] = self.headers
+            # 将caseid重新写入excel中
+            a = json.loads(cases["body"])
+            a["caseId"] = self.caseid
+            a["targetTime"] = get_date.GetDate().get_fengpan_date()
+            b = json.dumps(a)
+            cases.update({"body": b})
+        else:
+            cases["headers"] = self.headers
+            # 将caseid重新写入excel中
+            a = json.loads(cases["body"])
+            a["caseId"] = self.caseid
+            b = json.dumps(a)
+            cases.update({"body": b})
 
-    #客源去电、回访和面谈跟进
-    @ddt.data(*testdata)
-    def test_create_buy_customer_trackInfo(self, case):
-        case["headers"] = self.headers
-
-        # 将caseid重新写入excel中
-        a=json.loads(case["body"])
-        a["caseId"]=self.caseid
-        b=json.dumps(a)
-        case.update({"body":b})
-        print(case)
-
-        res = base_api.send_requests(self.s,case)
+        res = base_api.send_requests(self.s, cases)
 
         # 检查点 checkpoint
-        check = case["checkpoint"]      #获取检查点中的内容
-        check=json.loads(check)         #json字符串转为字典
+        check = cases["checkpoint"]  # 获取检查点中的内容
+        check = json.loads(check)  # json字符串转为字典
         print("检查点->：%s" % check)
 
-
         # 返回结果
-        res_text = res["text"]          #获取响应的内容
-        res_text=json.loads(res_text)   #将响应的内容转换为字典
-        print("返回实际结果->：%s"%res_text)
-
-
+        res_text = res["text"]  # 获取响应的内容
+        res_text = json.loads(res_text)  # 将响应的内容转换为字典
+        print("返回实际结果->：%s" % res_text)
 
         # 断言
         if "errMsg" not in res_text.keys():
@@ -108,43 +105,47 @@ class CustomerManage_CreateBuyCustomerTrack(unittest.TestCase):
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
 
-    # 求购客源约看
-    def test_create_buyCustomer_trackInfo_yuekan(self):
-        url="http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
-        headers = self.headers
-        data={"caseId":self.caseid,
-              "caseType":"3",
-              "houseIds":self.saleHouse_caseid,
-              "lookType":"0",
-              "targetTime":"2020-04-28 06:30","trackTag":"","trackType":"68"}
-        res=requests.post(url,json=data,headers=headers)
+    # 求购客源暂缓跟进日志
+    test_data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求购-创建暂缓跟进").dict_data()
+    print(test_data)
+    @ddt.data(*test_data)
+    def test_create_buy_customer_zanhuan_trackInfo(self, data):
+        if "targetTime" in data.keys():
+            data["headers"] = self.headers
+            # 将caseid重新写入excel中
+            a = json.loads(data["body"])
+            a["caseId"] = self.caseid
+            a["targetTime"] = get_date.GetDate().get_zanhuan_date()
+            b = json.dumps(a)
+            data.update({"body": b})
+            print(data)
+        else:
+            data["headers"] = self.headers
+            # 将caseid重新写入excel中
+            a = json.loads(data["body"])
+            a["caseId"] = self.caseid
+            b = json.dumps(a)
+            data.update({"body": b})
+            print(data)
 
-        # 检查点
-        check = res.json()       # 获取检查点中的内容
-        print("返回实际结果->：%s" % check)
+        res = base_api.send_requests(self.s, data)
 
-        self.makeLookId = check["data"]["makeLookId"]
-        print(self.makeLookId)
+        # 检查点 checkpoint
+        check = data["checkpoint"]  # 获取检查点中的内容
+        check = json.loads(check)  # json字符串转为字典
+        print("检查点->：%s" % check)
+
+        # 返回结果
+        res_text = res["text"]  # 获取响应的内容
+        res_text = json.loads(res_text)  # 将响应的内容转换为字典
+        print("返回实际结果->：%s" % res_text)
+
         # 断言
-        self.assertEqual(200, check["errCode"])
-
-        # 求购客源带看
-        url="http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
-        headers = self.headers
-        datas={"caseId":self.caseid,
-               "caseType":"3",
-               "daiKanHouseList":[{"lookType":"0","makeLookId":self.makeLookId,"targetId":self.saleHouse_caseid,"trackContent":"123456"}],
-               "isImmediate":"0","targetType":"1",
-               "trackType":"4","userIds":"20174961","userNames":"张小林","warmedUsers":"20174961"}
-
-        r=requests.post(url,json=datas,headers=headers)
-
-        # 检查点
-        check = r.json()       # 获取检查点中的内容
-        print("返回实际结果->：%s" % check)
-        # 断言
-        self.assertEqual(200, check["errCode"])
-
+        if "errMsg" not in res_text.keys():
+            self.assertEqual(check.get("errCode"), res_text["errCode"])
+        else:
+            self.assertEqual(check.get("errCode"), res_text["errCode"])
+            self.assertEqual(check.get("errMsg"), res_text["errMsg"])
 
 if __name__ == "__main__":
      unittest.main()

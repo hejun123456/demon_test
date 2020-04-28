@@ -35,12 +35,6 @@ class TestSoSo(unittest.TestCase):
     @ddt.data(*testdata)
     def test_soso_photolist(self, testdata):
         testdata["headers"]=self.header
-        # print(self.header)
-
-        # aes_util=AesHelper()
-        # testdata["body"]=aes_util.encrypt(testdata["body"])
-        # print(testdata["body"])
-
         res = base_api.send_requests(self.s,testdata)
 
         # 检查点 checkpoint
