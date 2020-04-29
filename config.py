@@ -27,3 +27,5 @@ IMGDATA_PATH=os.path.join(BASE_PATH,"imgdata")
 
 JPG_PATH=os.path.join(IMGDATA_PATH,"1.jpg")
 # print(JPG_PATH)
+
+

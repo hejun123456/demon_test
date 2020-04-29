@@ -43,9 +43,9 @@ class CustomerManage_InsertBuyContract(unittest.TestCase):
 
     @ddt.data(*testdata)
     def test_insertContract_buyCustomer(self, case):
-        if "dealHouseId" not in case.keys():
+        a=json.loads(case["body"])
+        if "dealHouseId" not in a.keys():
             case["headers"]=self.headers
-            a = json.loads(case["body"])
             a["custId"] = self.caseid
             a["dealCustomerId"] = self.caseid
             a["signDate"]=get_date.GetDate().get_today_str_data()
@@ -54,7 +54,6 @@ class CustomerManage_InsertBuyContract(unittest.TestCase):
             case.update({"body": b})
         else:
             case["headers"] = self.headers
-            a = json.loads(case["body"])
             a["custId"] = self.caseid
             a["dealCustomerId"] = self.caseid
             a["signDate"] = get_date.GetDate().get_today_str_data()

@@ -10,9 +10,8 @@ from common import readexcel
 from config import *
 
 
-
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="房源管理-委托").dict_data()
+testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="房源管理-委托截止时间测试").dict_data()
 print(testdata)
 
 @ddt.ddt
@@ -22,25 +21,30 @@ class TestHouseManager(unittest.TestCase):
         self.s = requests.session()
         self.caseid,self.header=HouseManage.HouseManage().create_houseSale()
     def tearDown(self):
-        salehouse_code=HouseManage.HouseManage().delete_houseSale(self.caseid)
-        if salehouse_code==200:
+        self.salehouse_code=HouseManage.HouseManage().delete_houseSale(self.caseid)
+        if self.salehouse_code==200:
             print("出售房源删除成功")
     @ddt.data(*testdata)
-    def test_add_entrust(self, case):
+    def test_add_entrust_targerTime(self, case):
         a=json.loads(case["body"])
-        if len(a["caseId"])==0:
+        if a["targetTime"]==0:
             case["headers"]=self.header
-            a["targetTime"]=get_date.GetDate().get_tomorrow_date()
+            a["targetTime"]=get_date.GetDate().get_today_str_data()
             b=json.dumps(a)
             case.update({"body":b})
-        else:
+        if a["targetTime"]==-1:
+            case["headers"] = self.header
+            a["targetTime"] = get_date.GetDate().get_yesterday_date()
+            b = json.dumps(a)
+            case.update({"body": b})
+        if a["targetTime"] == "":
             a["caseId"]=self.caseid
             case["headers"] = self.header
-            a["targetTime"] = get_date.GetDate().get_tomorrow_date()
+            a["targetTime"] = ""
             b = json.dumps(a)
             case.update({"body": b})
 
-        res = base_api.send_requests(self.s,case)
+        res = base_api.send_requests(self.s, case)
 
         # 检查点 checkpoint
         check = case["checkpoint"]  #获取检查点中的内容

@@ -68,18 +68,19 @@ class CustomerManage_CreateRentCustomerTrack_FengPanAndZanHuan(unittest.TestCase
     print(testdatas)
     @ddt.data(*testdatas)
     def test_create_rent_customer_fengpan_trackInfo(self, cases):
-        if "targetTime" in cases.keys():
+        a=json.loads(cases["body"])
+        if "targetTime" in a.keys():
             cases["headers"] = self.headers
             # 将caseid重新写入excel中
-            a = json.loads(cases["body"])
             a["caseId"] = self.caseid
             a["targetTime"] = get_date.GetDate().get_fengpan_date()
+            print("1111")
+            print(a)
             b = json.dumps(a)
             cases.update({"body": b})
         else:
             cases["headers"] = self.headers
             # 将caseid重新写入excel中
-            a = json.loads(cases["body"])
             a["caseId"] = self.caseid
             b = json.dumps(a)
             cases.update({"body": b})
@@ -108,10 +109,10 @@ class CustomerManage_CreateRentCustomerTrack_FengPanAndZanHuan(unittest.TestCase
     print(test_data)
     @ddt.data(*test_data)
     def test_create_rent_customer_zanhuan_trackInfo(self, data):
-        if "targetTime" in data.keys():
+        a=json.loads(data["body"])
+        if "targetTime" in a.keys():
             data["headers"] = self.headers
             # 将caseid重新写入excel中
-            a = json.loads(data["body"])
             a["caseId"] = self.caseid
             a["targetTime"] = get_date.GetDate().get_zanhuan_date()
             b = json.dumps(a)
@@ -119,7 +120,6 @@ class CustomerManage_CreateRentCustomerTrack_FengPanAndZanHuan(unittest.TestCase
         else:
             data["headers"] = self.headers
             # 将caseid重新写入excel中
-            a = json.loads(data["body"])
             a["caseId"] = self.caseid
             b = json.dumps(a)
             data.update({"body": b})

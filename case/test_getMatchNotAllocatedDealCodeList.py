@@ -13,7 +13,7 @@ from config import *
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH,sheetName="获取未领用的合同列表").dict_data()
+testdata = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH,sheetName="获取出售和出租未领用的合同列表").dict_data()
 print(testdata)
 @ddt.ddt
 class MatchNotAllocatedDealCode(unittest.TestCase):
@@ -42,6 +42,7 @@ class MatchNotAllocatedDealCode(unittest.TestCase):
         # 断言
         if "errMsg" not in res_text.keys():
             self.assertEqual(check.get("errCode"), res_text["errCode"])
+            self.assertEqual(check.get("codeId"),res_text["data"]["list"][0]["codeId"])
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])

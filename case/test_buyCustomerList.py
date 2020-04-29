@@ -19,11 +19,11 @@ print(testdata)
 class CustomerManage_GetBuyCustomerList(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # 如果有登录的话，就在这里先登录了
+        # 保持会话状态
         cls.s = requests.session()
         header=add_clientkey_to_headers.get_clientkey()
-        # print(header)
         cls.header = header
+
 
     @ddt.data(*testdata)
     def test_getBuyCustomerList(self, case):

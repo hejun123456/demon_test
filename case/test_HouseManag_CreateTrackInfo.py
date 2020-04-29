@@ -10,9 +10,6 @@ from common import readexcel
 from config import *
 from common.HouseManage import HouseManage
 
-
-
-
 #读取出excel中的测试数据
 testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="房源管理-出售-创建房源跟进日志").dict_data()
 print(testdata)
@@ -72,16 +69,12 @@ class HouseManage_CreateTrackSale(unittest.TestCase):
         res_text=json.loads(res_text)   #将响应的内容转换为字典
         print("返回实际结果->：%s"%res_text)
 
-
-
         # 断言
         if "errMsg" not in res_text.keys():
             self.assertEqual(check.get("errCode"), res_text["errCode"])
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
-
-
 
 
 if __name__ == "__main__":

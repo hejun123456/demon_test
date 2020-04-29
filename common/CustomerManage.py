@@ -21,6 +21,34 @@ class CustomerManage():
         print(headers)
         return res.json()["data"]["caseId"],headers
 
+    # 求购客源加密跟进日志
+    def add_pwd_buyCustomer(self):
+        caseid, headers = self.create_BuyCustomer()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "3",  # 3 代表求购中的客源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "17"  # 17 代表加密跟进
+                }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
+
+    # 求购客源推荐跟进日志
+    def add_recommend_buyCustomer(self):
+        caseid, headers = self.create_BuyCustomer()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "3",  # 3 代表求购中的客源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "18"  # 18 代表推荐跟进
+        }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
+
     #删除求购的客源
     def delete_buyCustomer(self,caseid):
         headers = add_clientkey_to_headers.get_clientkey()
@@ -47,6 +75,34 @@ class CustomerManage():
         print(res.json()["data"]["caseId"])
         print(headers)
         return res.json()["data"]["caseId"], headers
+
+    # 求租客源加密跟进日志
+    def add_pwd_rentCustomer(self):
+        caseid, headers = self.create_RentCustomer()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "4",  # 4 代表求租中的客源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "17"  # 17 代表加密跟进
+        }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
+
+    # 求购客源推荐跟进日志
+    def add_recommend_rentCustomer(self):
+        caseid, headers = self.create_RentCustomer()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "4",  # 4 代表求租中的客源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "18"  # 18 代表推荐跟进
+        }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
 
     #删除求租客源
     def delete_rentCustomer(self,caseid):

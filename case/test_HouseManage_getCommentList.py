@@ -19,9 +19,6 @@ print(testdata)
 
 @ddt.ddt
 class TestHouseManager(unittest.TestCase):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.headers = {}
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了
@@ -33,11 +30,6 @@ class TestHouseManager(unittest.TestCase):
     @ddt.data(*testdata)
     def test_get_comment_list(self, testdata):
         testdata["headers"]=self.header
-        # print(self.header)
-
-        # aes_util=AesHelper()
-        # testdata["body"]=aes_util.encrypt(testdata["body"])
-        # print(testdata["body"])
 
         res = base_api.send_requests(self.s,testdata)
 
@@ -45,10 +37,6 @@ class TestHouseManager(unittest.TestCase):
         check = testdata["checkpoint"]  #获取检查点中的内容
         check=json.loads(check)         #字符串转为字典
         print("检查点->：%s" % check)
-        # print(res)
-        # self.assertEqual(200,res.get("text"))
-        # self.assertEqual(0,res.get("status"))
-
 
         # 返回结果
         res_text = res["text"]          #获取响应的内容

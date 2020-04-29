@@ -15,10 +15,38 @@ class HouseManage():
         data=json.loads(data[0]["body"])
 
         res=requests.post(url=url,headers=headers,json=data)
-        print(res.json())
+
         print(res.json()["data"]["caseId"])
-        print(headers)
+
         return res.json()["data"]["caseId"],headers
+
+    #出售房源加密跟进日志
+    def add_pwd_houseSale(self):
+        caseid,headers=self.create_houseSale()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "1",  # 1 代表出售中的房源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "17"  #17 代表加密跟进
+        }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
+
+    # 出售房源推荐跟进日志
+    def add_recommend_houseSale(self):
+        caseid, headers = self.create_houseSale()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "1",  # 1 代表出售中的房源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "18"  # 18 代表推荐跟进
+        }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
 
     #删除出售中的房源
     def delete_houseSale(self,caseid):
@@ -44,6 +72,34 @@ class HouseManage():
         res = requests.post(url=url, headers=headers, json=data)
         print(res.json()["data"]["caseId"])
         return res.json()["data"]["caseId"], headers
+
+    # 出租房源加密跟进日志
+    def add_pwd_houseLease(self):
+        caseid, headers = self.create_houseLease()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "2",  # 2 代表出租中的房源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "17"  # 17 代表加密跟进
+        }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
+
+    # 出租房源推荐跟进日志
+    def add_recommend_houseLease(self):
+        caseid, headers = self.create_houseLease()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {
+            "caseId": caseid,
+            "caseType": "2",  # 1 代表出租中的房源
+            "isSaleLease": "0",  # 是否是租售房源，1=是，0=否  默认是0
+            "trackContent": "content",
+            "trackType": "18"  # 18 代表推荐跟进
+        }
+        requests.post(url=url, json=data, headers=headers)
+        return caseid
 
     #删除出租房源
     def delete_leaseHouse(self,caseid):
