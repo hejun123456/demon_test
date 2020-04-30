@@ -1,7 +1,7 @@
 
 
 import requests,json,ddt,unittest
-from common import readexcel,base_api
+from common import readexcel,base_api,CustomerManage
 from config import *
 from common import add_clientkey_to_headers
 

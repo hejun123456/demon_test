@@ -72,7 +72,7 @@ class SunPan(unittest.TestCase):
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
 
-    #取消笋盘
+    #取消笋盘及删除房源
     @classmethod
     def tearDownClass(cls):
         cls.caseid=cls.caseid
@@ -107,5 +107,5 @@ class SunPan(unittest.TestCase):
             print("登记的房源删除失败的原因：%s", (cls.r.json()["errMsg"]))
 
 
-if __name__ == "__main__":
-     unittest.main()
+# if __name__ == "__main__":
+#      unittest.main()

@@ -19,9 +19,6 @@ print(testdata)
 
 @ddt.ddt
 class TestHouseManage(unittest.TestCase):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.headers = {}
     @classmethod
     def setUpClass(cls):
         # 如果有登录的话，就在这里先登录了
@@ -63,5 +60,5 @@ class TestHouseManage(unittest.TestCase):
 
 
 
-# if __name__ == "__main__":
-#      unittest.main()
+if __name__ == "__main__":
+     unittest.main()

@@ -124,20 +124,24 @@ class HouseManage():
         buiddatd=res.json()["data"]["buildInfoVOS"][0]
         return buiddatd["buildId"],buiddatd["buildName"],buiddatd["buildCode"],headers
 
+    #提交出售中房源的钥匙
+    def submitKey_houseSale(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/house/submitKey"
+        data = {"caseId":caseid,
+                "caseType":"1",
+                "key":"1","keyDeptId":"904205",
+                "keyVoucher":"oss/online/tmp/2020/04/15/646cbc8db6574b1991b7bbbded72c339.jpg",
+                "trackContent":"收到钥匙"}
+
+        requests.post(url, json=data, headers=headers)
+        return headers
 
 
 
 
 
 
-
-# a=HouseMansge()
-# a.create_houseSale()
-# a.delete_houseSale("12212125465werfr")
-# a,b,c,d=a.get_builId("英郡")
-# print(a,b,c,d)
-
-# a.get_caseId_Sale()
 
 
 

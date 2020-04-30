@@ -1,15 +1,10 @@
 # coding:utf-8
 
 
-# 再封装一个写入excel数据的方法
-
-
 # coding:utf-8
 from openpyxl import load_workbook
 import openpyxl
 from config import *
-
-
 
 
 def copy_excel(excelpath1=HOUSE_MANAGE_EXCEL_PATH, excelpath2=RESULT_PATH):

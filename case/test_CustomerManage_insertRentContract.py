@@ -77,10 +77,9 @@ class CustomerManage_InsertBuyContract(unittest.TestCase):
         res_text = res["text"]          #获取响应的内容
         res_text=json.loads(res_text)   #将响应的内容转换为字典
         print("返回实际结果->：%s"%res_text)
-        self.dealId=res_text["data"]["dealId"]
 
         # 断言
-        if "errMsg" not in res_text.keys() and self.dealId > 0:
+        if "errMsg" not in res_text.keys():
             self.assertEqual(check.get("errCode"), res_text["errCode"])
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])

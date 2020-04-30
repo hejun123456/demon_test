@@ -53,7 +53,6 @@ class CustomerManage_BuyCustomer(unittest.TestCase):
         check=json.loads(check)         #json字符串转为字典
         print("检查点->：%s" % check)
 
-
         # 返回结果
         res_text = res["text"]          #获取响应的内容
         res_text=json.loads(res_text)   #将响应的内容转换为字典

@@ -5,7 +5,7 @@
 import unittest
 import ddt
 import requests,json
-from common import base_api
+from common import base_api,get_date
 from common import readexcel
 from config import *
 from common.HouseManage import HouseManage
@@ -47,15 +47,20 @@ class HouseManage_CreateTrackSale(unittest.TestCase):
 
     @ddt.data(*testdata)
     def test_create_trackInfo(self, case):
-        case["headers"] = self.headers
-
-        # 将caseid重新写入excel中
         a=json.loads(case["body"])
-        a["caseId"]=self.caseid
-        b=json.dumps(a)
-        case.update({"body":b})
-        print(case)
-
+        if "targetTime" not in a.keys():
+            case["headers"] = self.headers
+            # 将caseid重新写入excel中
+            a["caseId"]=self.caseid
+            b=json.dumps(a)
+            case.update({"body":b})
+        else:
+            case["headers"] = self.headers
+            # 将caseid和targetTime重新写入excel中
+            a["caseId"] = self.caseid
+            a["targetTime"]= get_date.GetDate().get_tomorrow_date()
+            b = json.dumps(a)
+            case.update({"body": b})
         res = base_api.send_requests(self.s,case)
 
         # 检查点 checkpoint

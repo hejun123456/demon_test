@@ -5,7 +5,7 @@
 import unittest
 import ddt
 import requests,json
-from common import base_api
+from common import base_api,HouseManage
 from common import readexcel
 from config import *
 from common import add_clientkey_to_headers
@@ -17,31 +17,16 @@ print(testdata)
 
 @ddt.ddt
 class HouseManage_HouseLease(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
+    # @classmethod
+    def setUp(self):
         # 如果有登录的话，就在这里先登录了
-        cls.s = requests.session()
+        self.s = requests.session()
         header=add_clientkey_to_headers.get_clientkey()
-        # print(header)
-        cls.header = header
-
-    #删除登记后出售的房源
+        self.header=header
+    #删除登记后出租的房源
+    @classmethod
     def tearDown(self):
-        if self.caseid > 0:
-            url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
-            data = {
-                    "caseId": self.caseid,
-                    "caseType": "2",         # 1 代表出售房源 2 代表出租房源
-                    "isSaleLease": "0",      # 是否是租售房源，1=是，0=否  默认是0
-                    "trackContent": "content",
-                    "trackType": "30"        # 30 代表删除房源
-                }
-            r = requests.post(url=url, json=data, headers=self.header)
-            # print(r.json()["errCode"])
-            self.assertEqual(200, r.json()["errCode"])
-            print("登记出售房源已成功删除")
-        else:
-            print("登记出售房源失败，没有出售的房源可删除")
+        print("pass")
 
     @ddt.data(*testdata)
     def test_create_houseLease(self, case):
@@ -58,16 +43,20 @@ class HouseManage_HouseLease(unittest.TestCase):
         # 返回结果
         res_text = res["text"]          #获取响应的内容
         res_text=json.loads(res_text)   #将响应的内容转换为字典
-        print("返回实际结果->：%s"%res_text)
-        self.caseid=res_text["data"]["caseId"]
-        # print(self.caseid)
-
-        # 断言
-        if "errMsg" not in res_text.keys():
-            self.assertEqual(check.get("errCode"), res_text["errCode"])
+        print("返回实际结果->：%s" % res_text)
+        datas=res_text["data"]
+        #断言
+        if "caseId" in datas.keys():
+            self.caseid=res_text["data"]["caseId"]
+            errCode = HouseManage.HouseManage().delete_leaseHouse(self.caseid)
+            if errCode == 200:
+                print("登记出租房源已成功删除")
+                self.assertEqual(check.get("errCode"), res_text["errCode"])
         else:
+            print("出租房源登记失败errMsg:%s" %(res_text["errMsg"]))
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
+
 
 if __name__ == "__main__":
      unittest.main()

@@ -16,9 +16,7 @@ class CustomerManage():
         data=json.loads(data[0]["body"])
 
         res=requests.post(url=url,headers=headers,json=data)
-        print(res.json())
-        print(res.json()["data"]["caseId"])
-        print(headers)
+
         return res.json()["data"]["caseId"],headers
 
     # 求购客源加密跟进日志

@@ -41,4 +41,3 @@ class GetDate():
         b=b.strftime('%Y-%m-%d')
         return b+" "+time
 
-print(GetDate().get_today_date())
