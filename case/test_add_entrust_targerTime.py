@@ -27,19 +27,19 @@ class TestHouseManager(unittest.TestCase):
     @ddt.data(*testdata)
     def test_add_entrust_targerTime(self, case):
         a=json.loads(case["body"])
-        if a["targetTime"]==0:
-            case["headers"]=self.header
+        case["headers"] = self.header
+        if a["targetTime"] == "0":
+            a["caseId"] = self.caseid
             a["targetTime"]=get_date.GetDate().get_today_str_data()
             b=json.dumps(a)
             case.update({"body":b})
-        if a["targetTime"]==-1:
-            case["headers"] = self.header
-            a["targetTime"] = get_date.GetDate().get_yesterday_date()
+        if a["targetTime"]=="-1":
+            a["caseId"] = self.caseid
+            a["targetTime"] = get_date.GetDate().get_yesterday_str_date()
             b = json.dumps(a)
             case.update({"body": b})
         if a["targetTime"] == "":
             a["caseId"]=self.caseid
-            case["headers"] = self.header
             a["targetTime"] = ""
             b = json.dumps(a)
             case.update({"body": b})

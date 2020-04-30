@@ -14,6 +14,11 @@ class GetDate():
         today=self.get_today_date()
         yesterday=today - datetime.timedelta(days=1)
         return yesterday
+    #以字符串格式获取昨天日期
+    def get_yesterday_str_date(self):
+        yesterday=self.get_yesterday_date()
+        return yesterday.strftime("%Y-%m-%d")
+
     #获取明天日期
     def get_tomorrow_date(self):
         today=self.get_today_date()

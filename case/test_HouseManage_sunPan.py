@@ -107,5 +107,5 @@ class SunPan(unittest.TestCase):
             print("登记的房源删除失败的原因：%s", (cls.r.json()["errMsg"]))
 
 
-# if __name__ == "__main__":
-#      unittest.main()
+if __name__ == "__main__":
+     unittest.main()

@@ -6,15 +6,13 @@ import unittest
 import HTMLTestRunner
 from config import *
 
-
+#加载所有以test开头的用例
 def add_case(casepath=CASE_PATH, rule="test*.py"):
-     '''加载所有的测试用例'''
-     # 定义discover方法的参数
-     discover = unittest.defaultTestLoader.discover(casepath,pattern=rule,)
+     discover = unittest.defaultTestLoader.discover(casepath,pattern=rule,)   # 定义discover方法的参数
      return discover
 
+#执行所加载的用例，并把结果写入测试报告
 def run_case(all_case, reportpath=REPORT_PATH):
-     '''执行所有的用例, 并把结果写入测试报告'''
      htmlreport = reportpath+r"\result.html"
      print("测试报告生成地址：%s"% htmlreport)
      with open(htmlreport, "wb") as f:
