@@ -3,8 +3,6 @@
 
 
 import json
-import requests
-from common.readexcel import ExcelUtil
 from common.writeexcel import copy_excel, Write_excel
 from config import *
 
@@ -85,6 +83,8 @@ def send_requests(s,testdata):
                       url=url,
                        params=params,
                        headers=headers,
+
+
                        data=body,
                        verify=verify)
          # print(body)

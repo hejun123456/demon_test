@@ -134,9 +134,82 @@ class CustomerManage():
         res_dict = res.json()
         return (res_dict["data"]["list"])[0]["codeNo"],headers
 
+    #创建一个客源求购面积最小的客源
+    def create_BuyCustomer_LowerArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/buyCust/createBuyCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求购排序-登记").dict_data()
+        data = json.loads(data[0]["body"])
 
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
 
+    #创建一个客源求购面积最大的客源
+    def create_BuyCustomer_HighArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/buyCust/createBuyCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求购排序-登记").dict_data()
+        data = json.loads(data[1]["body"])
 
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"], headers
 
+    #创建一个客源求购总价最小的客源
+    def create_BuyCustomer_LowerPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/buyCust/createBuyCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求购排序-登记").dict_data()
+        data = json.loads(data[2]["body"])
 
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
 
+    # 创建一个客源求购总价最大的客源
+    def create_BuyCustomer_HighPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/buyCust/createBuyCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求购排序-登记").dict_data()
+        data = json.loads(data[3]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"],headers
+
+    # 创建一个客源求租面积最小的客源
+    def create_RentCustomer_LowerArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/rentCust/createRentCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求租排序-登记").dict_data()
+        data = json.loads(data[0]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
+
+    # 创建一个客源求购面积最大的客源
+    def create_RentCustomer_HighArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/rentCust/createRentCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求租排序-登记").dict_data()
+        data = json.loads(data[1]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"], headers
+
+    # 创建一个客源求购总价最小的客源
+    def create_RentCustomer_LowerPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/rentCust/createRentCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求租排序-登记").dict_data()
+        data = json.loads(data[2]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
+
+    # 创建一个客源求购总价最大的客源
+    def create_RentCustomer_HighPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/erp/rentCust/createRentCustomer"
+        data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求租排序-登记").dict_data()
+        data = json.loads(data[3]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"], headers

@@ -5,7 +5,7 @@
 import unittest
 import ddt
 import requests,json
-from common import base_api
+from common import base_api,HouseManage
 from common import readexcel
 from config import *
 from common import add_clientkey_to_headers
@@ -21,15 +21,26 @@ print(testdata)
 class TestHouseManager(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # 如果有登录的话，就在这里先登录了
+        # 保持登录状态
         cls.s = requests.session()
-        header=add_clientkey_to_headers.get_clientkey()
-        # print(header)
-        cls.header = header
-
+        cls.sale_caseid,cls.sale_header=HouseManage.HouseManage().create_houseSale()
+    @classmethod
+    def tearDownClass(cls):
+        sale_code=HouseManage.HouseManage().delete_houseSale(cls.sale_caseid)
+        if sale_code==200:
+            print("出售房源成功删除")
+        else:
+            print("房源删除失败")
     @ddt.data(*testdata)
     def test_get_comment_list(self, testdata):
-        testdata["headers"]=self.header
+        a=json.loads(testdata["body"])
+        if a["caseId"]=="":
+            testdata["headers"]=self.sale_header
+        else:
+            testdata["headers"]=self.sale_header
+            a["caseId"]=self.sale_caseid
+            b=json.dumps(a)
+            testdata.update({"body":b})
 
         res = base_api.send_requests(self.s,testdata)
 
@@ -43,14 +54,12 @@ class TestHouseManager(unittest.TestCase):
         res_text=json.loads(res_text)   #将响应的内容转换为字典
         print("返回实际结果->：%s"%res_text)
 
-
         # 断言
-
-        if "errMsg" not in res_text.keys():
-            self.assertEqual(check.get("errCode"), res_text["errCode"])
+        if res_text["data"]["commentList"]==[]:
+            self.assertEqual(check.get("commentList"),res_text["data"]["commentList"])
         else:
-            self.assertEqual(check.get("errCode"), res_text["errCode"])
-            self.assertEqual(check.get("errMsg"), res_text["errMsg"])
+            self.assertEqual(check.get("coreInfo"),res_text["data"]["commentList"][0]["coreInfo"])
+
 
 if __name__ == "__main__":
      unittest.main()

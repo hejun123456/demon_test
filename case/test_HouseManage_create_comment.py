@@ -5,10 +5,10 @@
 import unittest
 import ddt
 import requests,json
-from common import base_api
+from common import base_api,HouseManage
 from common import readexcel
 from config import *
-from common import add_clientkey_to_headers
+
 
 
 
@@ -19,17 +19,29 @@ print(testdata)
 
 @ddt.ddt
 class TestHouseManager(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # 如果有登录的话，就在这里先登录了
-        cls.s = requests.session()
-        header=add_clientkey_to_headers.get_clientkey()
-        # print(header)
-        cls.header = header
 
+    def setUp(self):
+        # 保持登录状态
+        self.s = requests.session()
+        self.caseid,self.header=HouseManage.HouseManage().create_houseSale()
+
+
+    def tearDown(self):
+        code=HouseManage.HouseManage().delete_houseSale(self.caseid)
+        if code == 200:
+            print("房源删除成功")
+        else:
+            print("房源删除失败")
     @ddt.data(*testdata)
     def test_create_comment(self, testdata):
-        testdata["headers"]=self.header
+        a=json.loads(testdata["body"])
+        if a["caseId"]=="":
+            testdata["headers"]=self.header
+        else:
+            testdata["headers"]=self.header
+            a["caseId"]=self.caseid
+            b=json.dumps(a)
+            testdata.update({"body":b})
 
         res = base_api.send_requests(self.s,testdata)
 

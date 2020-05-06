@@ -11,7 +11,7 @@ class FunSoSo():
     def get_SoSo_houseSale(self):
         headers=add_clientkey_to_headers.get_clientkey()
         url="http://hft.myfun7.com/sosoWeb/soso/house/getSoSoSaleList"
-        data=readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="搜搜-出售信息").dict_data()
+        data=readexcel.ExcelUtil(SOSO_EXCEL_PATH,sheetName="搜搜-出售信息").dict_data()
         data=json.loads(data[0]["body"])
 
         res=requests.post(url=url,headers=headers,json=data)
@@ -24,7 +24,7 @@ class FunSoSo():
     def get_SoSo_houseSalePhone(self):
         self.id,self.headers=self.get_SoSo_houseSale()
         url="http://hft.myfun7.com/erpWeb/soso/house/getSOSOConvertDetectData"
-        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="搜搜-查看电话").dict_data()
+        data = readexcel.ExcelUtil(SOSO_EXCEL_PATH, sheetName="搜搜-查看电话").dict_data()
         dict_data = json.loads(data[0]["body"])
         dict_data.update({"sosoId":self.id})
 
@@ -43,12 +43,6 @@ class FunSoSo():
         print(res.json())
         print(res.json()["data"])
         return res.json()["data"],self.id
-
-
-
-
-
-
 
 #
 # a=FunSoSo()

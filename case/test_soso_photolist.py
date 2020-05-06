@@ -4,11 +4,9 @@
 
 import unittest
 import ddt
-import os
 import requests,json
 from common import base_api
 from common import readexcel
-from common import writeexcel
 from config import *
 from common import add_clientkey_to_headers
 
@@ -16,7 +14,7 @@ from common import add_clientkey_to_headers
 
 
 #读取出excel中的测试数据
-testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH,sheetName="搜搜-图片列表").dict_data()
+testdata = readexcel.ExcelUtil(SOSO_EXCEL_PATH,sheetName="搜搜-图片列表").dict_data()
 print(testdata)
 
 @ddt.ddt

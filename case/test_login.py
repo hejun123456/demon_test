@@ -3,7 +3,6 @@
 import json
 import unittest
 import ddt
-import os
 import requests
 
 from aes_c import aes_util
