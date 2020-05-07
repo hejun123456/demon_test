@@ -1,23 +1,25 @@
 
 
 import requests,json,ddt,unittest
-from common import readexcel,base_api,CustomerManage
+from common import readexcel,base_api,HouseManage
 from config import *
+from time import sleep
 
 @ddt.ddt
-class BuyCustomerOrder(unittest.TestCase):
+class SaleHouseAreaOrder(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # 保持登录状态
         cls.s = requests.session()
-        #创建求购中按照面积来排序的房源
-        cls.Lower_caseid=CustomerManage.CustomerManage().create_BuyCustomer_LowerArea()
-        cls.High_caseid,cls.headers=CustomerManage.CustomerManage().create_BuyCustomer_HighArea()
+        #创建出售中按照面积来排序的房源
+        cls.Lower_caseid=HouseManage.SaleHouseOrder().create_SaleHouse_LowerArea()
+        cls.High_caseid,cls.headers=HouseManage.SaleHouseOrder().create_SaleHouse_HighArea()
+        sleep(10)
 
     @classmethod
     def tearDownClass(cls):
-        lower_coed=CustomerManage.CustomerManage().delete_buyCustomer(cls.Lower_caseid)
-        high_code=CustomerManage.CustomerManage().delete_buyCustomer(cls.High_caseid)
+        lower_coed=HouseManage.HouseManage().delete_houseSale(cls.Lower_caseid)
+        high_code=HouseManage.HouseManage().delete_houseSale(cls.High_caseid)
 
         if lower_coed == 200 and high_code == 200:
             print("房源删除成功")
@@ -25,11 +27,11 @@ class BuyCustomerOrder(unittest.TestCase):
             print("房源删除失败")
 
 
-    #求购客源按照总面积排序
-    data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求购-总面积排序").dict_data()
+    #出售房源按照总面积排序
+    data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售-总面积排序").dict_data()
     print(data)
     @ddt.data(*data)
-    def test_buyCustomer_total_AreaOrder(self,case):
+    def test_saleHouse_total_AreaOrder(self,case):
         case["headers"] = self.headers
         res = base_api.send_requests(self.s, case)
         # 检查点 checkpoint
@@ -43,8 +45,8 @@ class BuyCustomerOrder(unittest.TestCase):
         print("返回实际结果->：%s" % res_text)
 
         # 断言
-        self.assertEqual(check.get("houseAreaHigh"),res_text["data"]["buyCustomers"][0]["houseAreaHigh"])
-        self.assertEqual(check.get("buildName"),(res_text["data"]["buyCustomers"][0]["buildName"]).strip())
+        self.assertEqual(check.get("saleArea"), res_text["data"]["saleList"][0]["saleArea"])
+        self.assertEqual(check.get("buildName"), res_text["data"]["saleList"][0]["buildName"])
 
 
 if __name__ == '__main__':

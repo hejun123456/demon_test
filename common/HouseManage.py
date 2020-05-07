@@ -1,7 +1,7 @@
 
 
 import requests,json
-from common import readexcel
+from common import readexcel,get_date
 from config import *
 from common import add_clientkey_to_headers
 
@@ -136,3 +136,93 @@ class HouseManage():
 
         requests.post(url, json=data, headers=headers)
         return headers
+class HouseStatus():
+    def create_fengPan(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url="http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data={"caseId":caseid,
+              "caseType":"1",
+              "targetTime":get_date.GetDate().get_fengpan_date(),
+              "trackType":"26",
+              "trackContent":"房源已进入磋商阶段，暂不能带看"}
+        requests.post(url,json=data,headers=headers)
+        return caseid
+
+    def create_zanHuan(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {"caseId": caseid,
+                "caseType": "1",
+                "targetTime": get_date.GetDate().get_zanhuan_date(),
+                "trackType": "27",
+                "trackContent": "业主在外地，近期无法带看"}
+        requests.post(url, json=data, headers=headers)
+        return caseid
+    def create_neiChengJiao(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {"caseId": caseid,
+                "caseType": "1",
+                "trackType": "28",
+                "trackContent": "该房源已经内成交"}
+        requests.post(url, json=data, headers=headers)
+        return caseid
+    def create_waiChengJiao(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {"caseId": caseid,
+                "caseType": "1",
+                "trackType": "29",
+                "trackContent": "该出售房源已经外成交"}
+        requests.post(url, json=data, headers=headers)
+        return caseid
+    def create_yuDing(self,caseid):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        data = {"caseId": caseid,
+                "caseType": "1",
+                "targetTime":get_date.GetDate().get_fengpan_date(),
+                "trackType": "25",
+                "trackContent": "该出售的房源已被客户预定了"}
+        requests.post(url, json=data, headers=headers)
+        return caseid
+class SaleHouseOrder():
+    #创建一个出售面积最小的房源
+    def create_SaleHouse_LowerArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funSale/createFunSale"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售排序-登记").dict_data()
+        data = json.loads(data[0]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
+
+    #创建一个出售面积最大的房源
+    def create_SaleHouse_HighArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funSale/createFunSale"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售排序-登记").dict_data()
+        data = json.loads(data[1]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"], headers
+
+    #创建一个出售价格最小的房源
+    def create_SaleHouse_LowerPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funSale/createFunSale"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售排序-登记").dict_data()
+        data = json.loads(data[2]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
+
+    # 创建一个出售价格最大的房源
+    def create_SaleHouse_HighPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funSale/createFunSale"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售排序-登记").dict_data()
+        data = json.loads(data[3]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"],headers
