@@ -46,5 +46,5 @@ class TestSoSo(unittest.TestCase):
         self.assertEqual(check.get("errCode"),res_text["errCode"])
         self.assertTrue(len(res_text["data"])>0)
 
-# if __name__ == "__main__":
-#      unittest.main()
+if __name__ == "__main__":
+     unittest.main()

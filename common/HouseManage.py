@@ -226,3 +226,73 @@ class SaleHouseOrder():
 
         res = requests.post(url=url, headers=headers, json=data)
         return res.json()["data"]["caseId"],headers
+
+    #创建一个单价最低的房源
+    def create_SaleHouse_unitPriceLow(self):
+        headers=add_clientkey_to_headers.get_clientkey()
+        url="http://hft.myfun7.com/houseWeb/funSale/createFunSale"
+        data=readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售排序-登记").dict_data()
+        data=json.loads(data[4]["body"])
+        res=requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
+
+    #创建一个单价最大的房源
+    def create_SaleHouse_unitPriceHigh(self):
+        headers=add_clientkey_to_headers.get_clientkey()
+        url="http://hft.myfun7.com/houseWeb/funSale/createFunSale"
+        data=readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售排序-登记").dict_data()
+        data=json.loads(data[5]["body"])
+        res=requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"], headers
+
+class LeaseHouseOrder():
+    #创建一个出租面积最小的房源
+    def create_LeaseHouse_LowerArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funLease/createFunLease"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出租排序-登记").dict_data()
+        data = json.loads(data[0]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
+
+    #创建一个出租面积最大的房源
+    def create_LeaseHouse_HighArea(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funLease/createFunLease"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出租排序-登记").dict_data()
+        data = json.loads(data[1]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"], headers
+
+    #创建一个出租价格最小的房源
+    def create_LeaseHouse_LowerPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funLease/createFunLease"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出租排序-登记").dict_data()
+        data = json.loads(data[2]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"]
+
+    # 创建一个出租价格最大的房源
+    def create_LeaseHouse_HighPrice(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funLease/createFunLease"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出租排序-登记").dict_data()
+        data = json.loads(data[3]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        return res.json()["data"]["caseId"],headers
+
+class GetHouseFloorMenu():
+    def get_houseFloorMenu(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/erpWeb/managerCenter/buildRule/getHouseFloorMenu"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="管理中心-获取楼盘信息").dict_data()
+        data = json.loads(data[0]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        lst_data=res.json()["data"]["buildInfoVOS"][0]
+        return lst_data["buildId"]

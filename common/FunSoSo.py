@@ -15,9 +15,7 @@ class FunSoSo():
         data=json.loads(data[0]["body"])
 
         res=requests.post(url=url,headers=headers,json=data)
-        print(res.json())
         print(res.json()["data"][0]["id"])
-        print(headers)
         return str(res.json()["data"][0]["id"]),headers
 
     #获取搜搜中出售房源电话
@@ -29,7 +27,6 @@ class FunSoSo():
         dict_data.update({"sosoId":self.id})
 
         res = requests.post(url=url, headers=self.headers, json=dict_data)
-        print(res.json())
         print(res.json()["data"][0]["phone"])
         return str(res.json()["data"][0]["phone"]),self.id,self.headers
 
@@ -40,7 +37,6 @@ class FunSoSo():
         data={"sosoId":self.id,"time":"2020-04-23 12:00:26"}
 
         res = requests.post(url=url, headers=self.headers, json=data)
-        print(res.json())
         print(res.json()["data"])
         return res.json()["data"],self.id
 

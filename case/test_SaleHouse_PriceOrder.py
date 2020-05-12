@@ -28,7 +28,7 @@ class SaleHousePriceOrder(unittest.TestCase):
 
 
     #出售房源按照总价格排序
-    data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售-总价格").dict_data()
+    data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售-总价格排序").dict_data()
     print(data)
     @ddt.data(*data)
     def test_saleHouse_total_PriceOrder(self,case):

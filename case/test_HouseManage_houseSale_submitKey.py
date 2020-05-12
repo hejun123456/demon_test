@@ -2,8 +2,7 @@
 # 作者：hejun
 
 
-import unittest
-import ddt
+import unittest,ddt,time
 import requests,json
 from common import base_api,HouseManage
 from common import readexcel
@@ -54,6 +53,6 @@ class TestHouseManager(unittest.TestCase):
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
-
+        time.sleep(5)
 if __name__ == "__main__":
      unittest.main()

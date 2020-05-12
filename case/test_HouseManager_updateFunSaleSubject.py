@@ -55,7 +55,7 @@ class TestHouseManager(unittest.TestCase):
         # 断言
         if "errMsg" not in res_text.keys():
             self.assertEqual(check.get("errCode"), res_text["errCode"])
-            self.assertEqual(bool(check.get("change")), res_text["data"]["change"])
+            self.assertEqual(check.get("change"), str(res_text["data"]["change"]))
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])

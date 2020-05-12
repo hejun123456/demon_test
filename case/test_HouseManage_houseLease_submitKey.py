@@ -2,8 +2,7 @@
 # 作者：hejun
 
 
-import unittest
-import ddt
+import unittest,ddt,time
 import requests,json
 from common import base_api,HouseManage
 from common import readexcel
@@ -23,11 +22,13 @@ class TestHouseManager(unittest.TestCase):
         # 如果有登录的话，就在这里先登录了
         cls.s = requests.session()
         cls.caseid,cls.header=HouseManage.HouseManage().create_houseLease()
+
     @classmethod
     def tearDownClass(cls):
         code=HouseManage.HouseManage().delete_leaseHouse(cls.caseid)
         if code==200:
             print("登记出租房源删除成功")
+
     @ddt.data(*testdata)
     def test_houseLease_submit_key(self, testdata):
         testdata["headers"]=self.header
@@ -54,6 +55,8 @@ class TestHouseManager(unittest.TestCase):
         else:
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
+        time.sleep(5)
+
 
 if __name__ == "__main__":
      unittest.main()

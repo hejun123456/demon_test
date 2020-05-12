@@ -14,6 +14,7 @@ class BuyCustomerOrder(unittest.TestCase):
         cls.Lower_caseid=CustomerManage.CustomerManage().create_RentCustomer_LowerPrice()
         cls.High_caseid,cls.headers=CustomerManage.CustomerManage().create_RentCustomer_HighPrice()
 
+
     @classmethod
     def tearDownClass(cls):
         lower_coed=CustomerManage.CustomerManage().delete_rentCustomer(cls.Lower_caseid)
@@ -25,7 +26,7 @@ class BuyCustomerOrder(unittest.TestCase):
             print("房源删除失败")
 
     # 求租客源按照总价格排序
-    data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求租-总价格排序").dict_data()
+    data = readexcel.ExcelUtil(CUSTOMER_MANAGE_EXCEL_PATH, sheetName="客源管理-求租-租金排序").dict_data()
     print(data)
     @ddt.data(*data)
     def test_rentCustomer_total_PriceOrder(self, case):
