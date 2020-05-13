@@ -14,6 +14,8 @@ HOUSE_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"HouseManage_test_datas.xlsx")
 # print(EXCEL_PATH)
 CUSTOMER_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"CustomerManage_test_datas.xlsx")
 
+ORGANIZATION_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"OrganizationManage_test_datas.xlsx")
+
 SOSO_EXCEL_PATH=os.path.join(DATA_PATH,"HaoFang_SoSo_test_datas.xlsx")
 
 COMMON_PATH=os.path.join(BASE_PATH,"common")

@@ -23,10 +23,6 @@ class HouseManage_HouseSale(unittest.TestCase):
         self.s = requests.session()
         header=add_clientkey_to_headers.get_clientkey()
         self.header=header
-    #删除登记后出租的房源
-    @classmethod
-    def tearDown(self):
-        print("pass")
 
     @ddt.data(*testdata)
     def test_create_houseSale(self, case):
@@ -44,15 +40,18 @@ class HouseManage_HouseSale(unittest.TestCase):
         res_text=json.loads(res_text)   #将响应的内容转换为字典
         print("返回实际结果->：%s" % res_text)
         datas=res_text["data"]
-        #断言
+
+        #删除登记后的房源
         if "caseId" in datas.keys():
             self.caseid=res_text["data"]["caseId"]
             errCode = HouseManage.HouseManage().delete_houseSale(self.caseid)
             if errCode == 200:
                 print("登记出售房源已成功删除")
+                #断言
                 self.assertEqual(check.get("errCode"), res_text["errCode"])
         else:
             print("出售房源登记失败errMsg:%s" % (res_text["errMsg"]))
+            #断言
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
 
