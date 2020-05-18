@@ -30,10 +30,37 @@ class AddImg():
         #   raise  ··· # 抛出异常内容为：“···”
             return ''
 
+    def sendVide(self,jpgpath,jpgtype='image/jpeg'):
+        url = 'http://hft.myfun7.com/houseWeb/common/upload'
+        headers = {}
+        # 获取CLIENTKEY
+        headers.update({'CLIENTKEY': login_get_clientkey.login()})
+        # print(headers)
+
+        # 获取需要上传的图片
+        body = {'file': ('saleHouse.mp4', open(jpgpath, 'rb'), jpgtype)}
+
+        # 发起请求
+        r = requests.post(url, files=body, headers=headers)
+        print(r.json())
+        # 解决抛异常
+        try:
+            video_url = r.json()['data']['url']  # 获取图片相对路径
+            print(video_url)
+            return video_url
+
+        except Exception as msg:  # 返回报错信息
+            print('图片上传失败，原因：%s' % msg)  # 打印报错信息
+            #   raise   # 主动抛原始异常
+            #   raise  ··· # 抛出异常内容为：“···”
+            return ''
+
+
+
 # if __name__=='__main__':
 #     # s = requests.session()
 #     # 调登录方法
 #     login_get_clientkey.login()
 #     # 上传文件
 #     send = AddImg()                 # 把类sendfile()实例化为对象
-#     send.sendImg(JPG_PATH)          # 调用sendfile()里面的sendImg方法
+#     send.sendVide(VIDEO_PATH)        # 调用sendfile()里面的sendImg方法

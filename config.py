@@ -16,6 +16,10 @@ CUSTOMER_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"CustomerManage_test_datas.xls
 
 ORGANIZATION_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"OrganizationManage_test_datas.xlsx")
 
+STATISTICAL_ANALYSIS_EXCEL_PATH=os.path.join(DATA_PATH,"StatisticalAnalysis_test_datas.xlsx")
+
+ATTENDANCE_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"AttendanceManage_test_datas.xlsx")
+
 SOSO_EXCEL_PATH=os.path.join(DATA_PATH,"HaoFang_SoSo_test_datas.xlsx")
 
 COMMON_PATH=os.path.join(BASE_PATH,"common")
@@ -30,5 +34,9 @@ IMGDATA_PATH=os.path.join(BASE_PATH,"imgdata")
 
 JPG_PATH=os.path.join(IMGDATA_PATH,"1.jpg")
 # print(JPG_PATH)
+
+VIDEODATA_PATH=os.path.join(BASE_PATH,"Videodata")
+VIDEO_PATH=os.path.join(VIDEODATA_PATH,"saleHouse.mp4")
+
 
 

@@ -45,4 +45,14 @@ class GetDate():
         b=datetime.datetime.strptime(b,"%Y-%m-%d")
         b=b.strftime('%Y-%m-%d')
         return b+" "+time
+    # 获取当前月份
+    def get_local_month(self):
+        local_month=datetime.datetime.now().strftime("%Y-%m")
+        return local_month
+    #获取第二天时间（格式：2020-05-16 00:00:00）
+    def get_tomorrow_data_time_hourse(self):
+        b = self.get_tomorrow_date()
+        b = datetime.datetime.strptime(b, "%Y-%m-%d")
+        b = b.strftime('%Y-%m-%d')
+        return b+" "+"00:00:00"
 

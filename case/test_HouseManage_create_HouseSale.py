@@ -19,16 +19,16 @@ print(testdata)
 class HouseManage_HouseSale(unittest.TestCase):
     # @classmethod
     def setUp(self):
-        # 如果有登录的话，就在这里先登录了
+        # 保持登录状态
         self.s = requests.session()
         header=add_clientkey_to_headers.get_clientkey()
         self.header=header
 
     @ddt.data(*testdata)
     def test_create_houseSale(self, case):
-        case["headers"]=self.header
+        case["headers"] = self.header
 
-        res = base_api.send_requests(self.s,case)
+        res = base_api.send_requests(self.s, case)
 
         # 检查点 checkpoint
         check = case["checkpoint"]      #获取检查点中的内容

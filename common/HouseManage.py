@@ -136,6 +136,17 @@ class HouseManage():
 
         requests.post(url, json=data, headers=headers)
         return headers
+
+    # 删除出售房源中的视频
+    def delete_saleHouse_video(self,header,caseid,videoid):
+        url="http://hft.myfun7.com/erpWeb/house/deleteVideo"
+        data={"caseId": caseid,
+              "caseType": "1",
+              "videoId": videoid
+              }
+        r=requests.post(url, json=data, headers=header)
+        return r.json()["errCode"]
+
 class HouseStatus():
     def create_fengPan(self,caseid):
         headers = add_clientkey_to_headers.get_clientkey()
