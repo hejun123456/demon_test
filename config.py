@@ -20,6 +20,8 @@ STATISTICAL_ANALYSIS_EXCEL_PATH=os.path.join(DATA_PATH,"StatisticalAnalysis_test
 
 ATTENDANCE_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"AttendanceManage_test_datas.xlsx")
 
+WAGE_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"WageManage_test_datas.xlsx")
+
 SOSO_EXCEL_PATH=os.path.join(DATA_PATH,"HaoFang_SoSo_test_datas.xlsx")
 
 COMMON_PATH=os.path.join(BASE_PATH,"common")

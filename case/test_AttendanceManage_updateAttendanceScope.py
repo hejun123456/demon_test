@@ -83,7 +83,6 @@ class TestUpdateAttendanceScope(unittest.TestCase):
                 self.assertEqual(check.get("errCode"), res_text["errCode"])
 
         else:
-            self.assertEqual(check.get("errMsg"), res_text["errMsg"])
             self.assertEqual(check.get("errCode"), res_text["errCode"])
 
 
