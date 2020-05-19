@@ -24,6 +24,5 @@ class TestSendFile():
             list_jpg.append(result)
         print(list_jpg)
         return list_jpg
-#
-# a=TestSendFile
-# b=a.file_upload_5()
+
+

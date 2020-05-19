@@ -8,7 +8,6 @@ import requests,json
 from common import base_api
 from common import readexcel
 from config import *
-from common import add_clientkey_to_headers
 from common.HouseManage import HouseManage
 from common.fileupload import TestSendFile
 
@@ -32,7 +31,9 @@ class SunPan(unittest.TestCase):
 
         #上传5张房勘图片
         url="http://hft.myfun7.com/houseWeb/housePhoto/createMultipleHousePhotos"
-        data={"caseId":cls.caseid,"caseType":"1","photoAddr":"oss/online/tmp/2020/04/23/c19456a8739042fda065b2d7fbe69049.jpg,oss/online/tmp/2020/04/23/6cf18050393d4fcbad3b2101fe9bc4d6.jpg,oss/online/tmp/2020/04/23/f075f9f72c43464fa0f78cb7e8d08b22.jpg,oss/online/tmp/2020/04/23/cb82a2c0834e403cb2e419aed3d399b5.jpg,oss/online/tmp/2020/04/23/62ab76105de54c94b337b583137da9e8.jpg","photoSource":"1","photoType":"0"}
+        data={"caseId":cls.caseid,"caseType":"1",
+              "photoAddr":"oss/online/tmp/2020/04/23/c19456a8739042fda065b2d7fbe69049.jpg,oss/online/tmp/2020/04/23/6cf18050393d4fcbad3b2101fe9bc4d6.jpg,oss/online/tmp/2020/04/23/f075f9f72c43464fa0f78cb7e8d08b22.jpg,oss/online/tmp/2020/04/23/cb82a2c0834e403cb2e419aed3d399b5.jpg,oss/online/tmp/2020/04/23/62ab76105de54c94b337b583137da9e8.jpg",
+              "photoSource":"1","photoType":"0"}
         res=requests.post(url,json=data,headers=cls.header)
         print(res.json())
 
@@ -90,7 +91,7 @@ class SunPan(unittest.TestCase):
 
         #删除该房源
         headers=cls.header
-        deleurl = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
+        url = "http://hft.myfun7.com/houseWeb/houseCust/createTrackInfo"
         data = {
             "caseId": cls.caseid,
             "caseType": "1",  # 1 代表出售房源
@@ -98,7 +99,7 @@ class SunPan(unittest.TestCase):
             "trackContent": "content",
             "trackType": "30"  # 30 代表删除房源
                 }
-        cls.r = requests.post(url=deleurl, json=data, headers=headers)
+        cls.r = requests.post(url=url, json=data, headers=headers)
         # print(cls.r.text)
         if cls.r.json()["errCode"] == 200:
             print("登记出售房源已成功删除")
