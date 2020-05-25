@@ -27,8 +27,6 @@ SOSO_EXCEL_PATH=os.path.join(DATA_PATH,"HaoFang_SoSo_test_datas.xlsx")
 COMMON_PATH=os.path.join(BASE_PATH,"common")
 
 
-# TEST_REPORT=os.path.join(COMMON_PATH,"testreport.xlsx")
-
 RESULT_PATH=os.path.join(REPORT_PATH,"result.xlsx")
 
 IMGDATA_PATH=os.path.join(BASE_PATH,"imgdata")
@@ -38,6 +36,7 @@ JPG_PATH=os.path.join(IMGDATA_PATH,"1.jpg")
 # print(JPG_PATH)
 
 VIDEODATA_PATH=os.path.join(BASE_PATH,"Videodata")
+
 VIDEO_PATH=os.path.join(VIDEODATA_PATH,"saleHouse.mp4")
 
 

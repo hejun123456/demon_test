@@ -15,7 +15,7 @@ class HouseManage():
         data=json.loads(data[0]["body"])
 
         res=requests.post(url=url,headers=headers,json=data)
-
+        # print(res.json())
         print(res.json()["data"]["caseId"])
 
         return res.json()["data"]["caseId"],headers

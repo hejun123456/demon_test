@@ -5,9 +5,8 @@ import unittest
 import ddt
 import requests
 
-from aes_c import aes_util
-from common import base_api
-from common import readexcel
+
+from common import base_api,readexcel
 from config import *
 
 # 读取出excel中的测试数据
@@ -18,15 +17,14 @@ print(testdata)
 class TestLogin(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # 如果有登录的话，就在这里先登录了
+        # 保持登录状态
         cls.s = requests.session()
 
     @ddt.data(*testdata)
     def test_login(self, case):
-        # case = json.dumps(case)
-        # case = aes_util.encrypt(case)
+
         res = base_api.send_requests(self.s, case)
-        # base_api.wirte_result(res, filename=RESULT_PATH)
+
 
         # 检查点 checkpoint
         check = case["checkpoint"]

@@ -4,6 +4,7 @@ import requests,json,ddt,unittest
 from common import readexcel,base_api,CustomerManage
 from config import *
 
+
 @ddt.ddt
 class BuyCustomerOrder(unittest.TestCase):
     @classmethod
@@ -41,6 +42,7 @@ class BuyCustomerOrder(unittest.TestCase):
         res_text = res["text"]  # 获取响应的内容
         res_text = json.loads(res_text)  # 将响应的内容转换为字典
         print("返回实际结果->：%s" % res_text)
+
 
         # 断言
         self.assertEqual(check.get("houseAreaHigh"),res_text["data"]["buyCustomers"][0]["houseAreaHigh"])

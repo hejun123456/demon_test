@@ -62,14 +62,17 @@ class HouseManage_saleHouse_videoUpload(unittest.TestCase):
     def test_saleHouse_uploadVideo(self, case):
         case["headers"] = self.headers
         a=json.loads(case["body"])
-        if a["caseId"] != "":
+        if a["caseId"] != "" and a["videoAddr"] !="":
             # 将caseid以及video_url重新写入excel中
             a["caseId"]=self.caseid
             a["videoAddr"]=self.video_url
             b=json.dumps(a)
             case.update({"body":b})
+        elif a["videoAddr"]=="":
+            a["caseId"] = self.caseid
         else:
             pass
+
         res = base_api.send_requests(self.s, case)
 
         # 检查点 checkpoint
@@ -97,8 +100,6 @@ class HouseManage_saleHouse_videoUpload(unittest.TestCase):
             check["videoAddr"] = res_text["data"]["videoAddr"]
             self.assertEqual(check.get("videoAddr"), res_text["data"]["videoAddr"])
             self.assertEqual(check.get("errCode"), res_text["errCode"])
-        elif check.get("nullvideoAddr") == "nullhttp":
-            self.assertIn("nullhttp", res_text["data"]["videoAddr"])
         else:
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
             self.assertEqual(check.get("errCode"), res_text["errCode"])

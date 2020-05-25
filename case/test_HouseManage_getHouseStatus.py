@@ -18,7 +18,7 @@ class GetHouseStatus(unittest.TestCase):
         cls.s = requests.session()
         #创建5个出售房源
         lst = []
-        for i in range(0,5):
+        for i in range(0, 5):
             caseid,headers=HouseManage().create_houseSale()
             a=caseid
             lst.append(a)

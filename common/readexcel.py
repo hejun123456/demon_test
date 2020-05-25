@@ -21,7 +21,7 @@ class ExcelUtil():
         if self.rowNum <= 1:
             print("总行数小于1")
         else:
-            r=[]
+            r = []
             j=1
             for i in list(range(self.rowNum-1)):
                 s={}

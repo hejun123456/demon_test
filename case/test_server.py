@@ -4,11 +4,9 @@
 
 import unittest
 import ddt
-import os
 import requests
 from common import base_api
 from common import readexcel
-from common import writeexcel
 from config import *
 
 
