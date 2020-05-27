@@ -48,17 +48,14 @@ class OrganizationManage():
         self.header=add_clientkey_to_headers.get_clientkey()
         url = "http://hft.myfun7.com/erpWeb/managerCenter/organization/addInviteUserInfo"
         data = readexcel.ExcelUtil(ORGANIZATION_MANAGE_EXCEL_PATH, sheetName="邀请注册接口").dict_data()[0]
-        print(data)
         dic_data=json.loads(data["body"])
         dic_data["userMobile"]=untils.CreatePhone().create_phone()
         str_data=json.dumps(dic_data)
         data.update({"body":str_data})
-        print(data)
 
         r=requests.post(url,headers=self.header,json=json.loads(data["body"]))
-        print(r.json())
-        return (dic_data["serviceReg"],dic_data["serviceZoneIds"],dic_data["serviceZone"],
-                dic_data["userMobile"],self.header,dic_data["userName"])
+        return (dic_data["serviceReg"], dic_data["serviceZoneIds"], dic_data["serviceZone"],
+                dic_data["userMobile"], self.header, dic_data["userName"])
 
     # 获取邀请的链接参数
     def get_inviteLink(self,a):
@@ -67,7 +64,6 @@ class OrganizationManage():
         datas=a["CLIENTKEY"]
         data.update({"CLIENTKEY":datas})
         res=requests.post(url=url, headers=a, json=data)
-        print(res.json())
         link_params = res.json()["data"]["inviteLink"].split("?")[1].split("=")[1]
         return link_params
 
@@ -78,7 +74,6 @@ class OrganizationManage():
                 "userMobile": userMobile,
                 "code": "859652"}
         r = requests.post(url, data=data)
-        print(r.json())
         return r.json()["data"]["inviteId"]
 
     # 按关键字查询添加的员工

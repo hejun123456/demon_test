@@ -63,6 +63,7 @@ class GetHouseStatus(unittest.TestCase):
         print("返回实际结果->：%s" % res_text)
 
         # 断言
+        sleep(5)
         self.assertEqual(check.get("userName"), res_text["data"]["saleList"][0]["userName"])
         self.assertEqual(check.get("saleSubject"), res_text["data"]["saleList"][0]["saleSubject"])
 

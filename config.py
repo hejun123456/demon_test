@@ -10,6 +10,8 @@ REPORT_PATH=os.path.join(BASE_PATH,'report')
 
 DATA_PATH=os.path.join(BASE_PATH,"datas")
 
+USER_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"UserCenter_test_datas.xlsx")
+
 HOUSE_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"HouseManage_test_datas.xlsx")
 # print(EXCEL_PATH)
 CUSTOMER_MANAGE_EXCEL_PATH=os.path.join(DATA_PATH,"CustomerManage_test_datas.xlsx")
