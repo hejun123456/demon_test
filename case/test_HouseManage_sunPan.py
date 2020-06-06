@@ -35,6 +35,7 @@ class SunPan(unittest.TestCase):
               "photoAddr":"oss/online/tmp/2020/04/23/c19456a8739042fda065b2d7fbe69049.jpg,oss/online/tmp/2020/04/23/6cf18050393d4fcbad3b2101fe9bc4d6.jpg,oss/online/tmp/2020/04/23/f075f9f72c43464fa0f78cb7e8d08b22.jpg,oss/online/tmp/2020/04/23/cb82a2c0834e403cb2e419aed3d399b5.jpg,oss/online/tmp/2020/04/23/62ab76105de54c94b337b583137da9e8.jpg",
               "photoSource":"1","photoType":"0"}
         res=requests.post(url,json=data,headers=cls.header)
+        print("上传房堪图片成功")
         print(res.json())
 
         #查看房源笋盘剩余推送条数

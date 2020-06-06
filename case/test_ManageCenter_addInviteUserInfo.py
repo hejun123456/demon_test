@@ -41,6 +41,7 @@ class AddInviteUserInfo(unittest.TestCase):
         print("检查点->：%s" % check)
 
         # 返回结果
+        # print(res)
         res_text = res["text"]  # 获取响应的内容
         res_text = json.loads(res_text)  # 将响应的内容转换为字典
         print("返回实际结果->：%s" % res_text)

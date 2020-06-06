@@ -19,10 +19,6 @@ def run_case(all_case, reportpath=REPORT_PATH):
      run.report(filename="result.html", description="用例执行情况",report_dir=reportpath)
 
 
-     # htmlreport = reportpath+r"\result.html"
-     # with open(htmlreport, "wb") as f:
-     # runner=HTMLTestRunner.HTMLTestRunner(stream=f,verbosity=2,title="测试报告", description="用例执行情况")
-     # runner.run(all_case)
 
 
 

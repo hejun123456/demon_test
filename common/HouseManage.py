@@ -15,10 +15,23 @@ class HouseManage():
         data=json.loads(data[0]["body"])
 
         res=requests.post(url=url,headers=headers,json=data)
-        # print(res.json())
+        print(res.json())
         print(res.json()["data"]["caseId"])
 
         return res.json()["data"]["caseId"],headers
+
+    # 获取登记出售房源的房源编号
+    def get_saleHouse_caseNo(self):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/houseWeb/funSale/createFunSale"
+        data = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="房源管理-出售-登记").dict_data()
+        data = json.loads(data[0]["body"])
+
+        res = requests.post(url=url, headers=headers, json=data)
+        # print(res.json())
+        print(res.json()["data"]["caseId"])
+
+        return res.json()["data"]["caseId"],res.json()["data"]["caseNo"]
 
     #出售房源加密跟进日志
     def add_pwd_houseSale(self):
