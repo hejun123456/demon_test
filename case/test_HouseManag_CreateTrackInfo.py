@@ -44,6 +44,11 @@ class HouseManage_CreateTrackSale(unittest.TestCase):
                 print("登记的房源删除失败的原因：%s",(cls.r.json()["errMsg"]))
         else:
             print("登记出售房源失败，没有出售的房源可删除")
+        code=HouseManage().delete_leaseHouse(cls.caseid)
+        if code==200:
+            print("可租的房源删除成功")
+        else:
+            print("出租的房源未删除")
 
     @ddt.data(*testdata)
     def test_create_trackInfo(self, case):

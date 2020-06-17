@@ -19,6 +19,7 @@ class SaleHousePriceOrder(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         lower_coed=HouseManage.HouseManage().delete_houseSale(cls.Lower_caseid)
+        sleep(5)
         high_code=HouseManage.HouseManage().delete_houseSale(cls.High_caseid)
 
         if lower_coed == 200 and high_code == 200:

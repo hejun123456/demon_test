@@ -1,8 +1,4 @@
 
-
-
-
-
 import unittest,json
 from common.HouseManage import HouseManage,HouseStatus
 from common import readexcel,base_api,add_clientkey_to_headers

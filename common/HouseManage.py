@@ -126,6 +126,7 @@ class HouseManage():
             "trackType": "30"  # 30 代表删除房源
         }
         r = requests.post(url=url, json=data, headers=headers)
+        print(r.json())
         return r.json()["errCode"]
 
     #获取楼盘信息
@@ -219,6 +220,7 @@ class SaleHouseOrder():
         data = json.loads(data[0]["body"])
 
         res = requests.post(url=url, headers=headers, json=data)
+        print(res.json())
         return res.json()["data"]["caseId"]
 
     #创建一个出售面积最大的房源

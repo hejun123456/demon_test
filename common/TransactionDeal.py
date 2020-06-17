@@ -4,7 +4,7 @@
 
 import requests,json
 from common import base_api,CustomerManage,HouseManage,get_date
-from common import readexcel
+from common import readexcel,add_clientkey_to_headers
 from config import *
 
 
@@ -35,8 +35,23 @@ class TransactionDeal():
         res_text=json.loads(res["text"])
         return res_text["data"]["dealId"], self.headers,self.sale_caseid,self.caseid
 
+    # 撤销出售合同状态
+    def cancel_contract_status(self,deal_id,status,content="需要撤销对应的合同审核状态"):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/erpWeb/managerCenter/contract/updateMgrDealAduitStatusByCounter"
+        data = {"dealId":deal_id,"dealType":"101","dealAuditStatus":status,"dealVerifyCon":content}
 
+        r = requests.post(url=url, json=data, headers=headers)
+        return r.json()["errCode"]
 
+    # 合同作废
+    def delete_contract(self,deal_id,status="3",content="该合同需要作废处理"):
+        headers = add_clientkey_to_headers.get_clientkey()
+        url = "http://hft.myfun7.com/erpWeb/managerCenter/contract/updateMgrDealAduitStatus"
+        data = {"dealId": deal_id, "dealType": "101", "dealAuditStatus": status, "dealVerifyCon": content}
+
+        r = requests.post(url=url, json=data, headers=headers)
+        return r.json()["errCode"]
 
 
 

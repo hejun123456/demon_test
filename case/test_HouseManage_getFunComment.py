@@ -65,5 +65,5 @@ class TestHouseManager(unittest.TestCase):
             self.assertEqual(check.get("errCode"), res_text["errCode"])
             self.assertEqual(check.get("errMsg"), res_text["errMsg"])
 
-# if __name__ == "__main__":
-#      unittest.main()
+if __name__ == "__main__":
+     unittest.main()

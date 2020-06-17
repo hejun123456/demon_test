@@ -13,12 +13,14 @@ class LeaseHouseAreaOrder(unittest.TestCase):
         cls.s = requests.session()
         #创建出租中按照面积来排序的房源
         cls.Lower_caseid=HouseManage.LeaseHouseOrder().create_LeaseHouse_LowerArea()
+        sleep(5)
         cls.High_caseid,cls.headers=HouseManage.LeaseHouseOrder().create_LeaseHouse_HighArea()
         sleep(10)
 
     @classmethod
     def tearDownClass(cls):
         lower_coed=HouseManage.HouseManage().delete_leaseHouse(cls.Lower_caseid)
+        sleep(5)
         high_code=HouseManage.HouseManage().delete_leaseHouse(cls.High_caseid)
 
         if lower_coed == 200 and high_code == 200:

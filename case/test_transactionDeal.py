@@ -20,22 +20,37 @@ class TestTransactionDeal(unittest.TestCase):
         self.s = requests.session()
         self.deal_id, self.header, self.sale_id, self.custor_id = TransactionDeal.TransactionDeal().create_transaction_deal()
 
+    # 删除登记后的求购客源以及出售中的房源
+    def tearDown(self):
+        if self.data == "1":
+            # 撤销初审
+            code=TransactionDeal.TransactionDeal().cancel_contract_status(self.deal_id,"5")
+            if code==200:
+                print("撤销初审成功")
+        elif self.data=="2":
+            # 撤销复审
+            codes=TransactionDeal.TransactionDeal().cancel_contract_status(self.deal_id,"6")
+            if codes==200:
+                print("撤销复审成功")
+        # 合同作废
+        code_data=TransactionDeal.TransactionDeal().delete_contract(self.deal_id)
+        if code_data==200:
+            print("合同作废成功")
 
-    #删除登记后的求购客源以及出售中的房源
-    # def tearDown(self):
-    #     if self.caseid > 0:
-    #         buyCustomer_errcode = CustomerManage.CustomerManage().delete_buyCustomer(self.custor_id)
-    #         if buyCustomer_errcode == 200:
-    #             print("登记求购的客源已成功删除")
-    #     else:
-    #         print("登记求购客源删除失败")
-    #     # 删除登记的出售房源
-    #     if self.sale_caseid > 0:
-    #         huoseSale_errcode = HouseManage.HouseManage().delete_houseSale(self.sale_id)
-    #         if huoseSale_errcode == 200:
-    #             print("登记出售房源已成功删除")
-    #     else:
-    #         print("登记出售房源删除失败")
+        # 删除求购的客源
+        if self.custor_id > 0:
+            buyCustomer_errcode = CustomerManage.CustomerManage().delete_buyCustomer(self.custor_id)
+            if buyCustomer_errcode == 200:
+                print("登记求购的客源已成功删除")
+        else:
+            print("登记求购客源删除失败")
+        # 删除登记的出售房源
+        if self.sale_id > 0:
+            huoseSale_errcode = HouseManage.HouseManage().delete_houseSale(self.sale_id)
+            if huoseSale_errcode == 200:
+                print("登记出售房源已成功删除")
+        else:
+            print("登记出售房源删除失败")
 
     @ddt.data(*testdata)
     def test_insertContract_buyCustomer(self, case):
@@ -44,6 +59,7 @@ class TestTransactionDeal(unittest.TestCase):
         a["dealId"] = self.deal_id
         b = json.dumps(a)
         case.update({"body": b})
+        self.data=a["dealAuditStatus"]
 
         res = base_api.send_requests(self.s,case)
 

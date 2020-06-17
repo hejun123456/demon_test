@@ -42,7 +42,11 @@ class FunSoSo():
 
 #
 # a=FunSoSo()
-# a.get_sosoSale_infoById()
+# id,header=a.get_SoSo_houseSale()
+# phone,ids,headers=a.get_SoSo_houseSalePhone()
+# print(phone)
+# data,data_id=a.get_sosoSale_infoById()
+# print(data)
 
 # print(b)
 # a.delete_houseSale("12212125465werfr")

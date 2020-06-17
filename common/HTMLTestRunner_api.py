@@ -19,10 +19,6 @@ def run_case(all_case, reportpath=REPORT_PATH):
      run.report(filename="result.html", description="用例执行情况",report_dir=reportpath)
 
 
-
-
-
-
 # if __name__ == "__main__":
 #      cases = add_case()
 #      run_case(cases)
