@@ -3,7 +3,6 @@
 
 
 import unittest
-import HTMLTestRunner
 from config import *
 from BeautifulReport import BeautifulReport
 
