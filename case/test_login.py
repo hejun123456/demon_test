@@ -1,9 +1,13 @@
 # coding:utf-8
 # 作者：hejun
+
+
+
 import json
 import unittest
 import ddt
 import requests
+
 
 
 from common import base_api,readexcel
@@ -12,6 +16,7 @@ from config import *
 # 读取出excel中的测试数据
 testdata = readexcel.ExcelUtil(HOUSE_MANAGE_EXCEL_PATH, sheetName="登录接口").dict_data()
 print(testdata)
+
 
 @ddt.ddt
 class TestLogin(unittest.TestCase):
