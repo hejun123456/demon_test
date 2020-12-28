@@ -10,7 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c0be427-5dd2-473d-9fda-060c5e055b37" name="Default Changelist" comment="提交">
+    <list default="true" id="8c0be427-5dd2-473d-9fda-060c5e055b37" name="Default Changelist" comment="提交7">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +32,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python tests.pytest in test_add_entrust_targerTime.py">
+  <component name="RunManager" selected="Python.run_case">
     <configuration name="run_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="API_TEST_prodoct_excel" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,7 +113,21 @@
       <option name="project" value="LOCAL" />
       <updated>1609067617047</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="提交6">
+      <created>1609070043427</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1609070043427</updated>
+    </task>
+    <task id="LOCAL-00003" summary="提交7">
+      <created>1609070819681</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1609070819681</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,16 +143,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="提交" />
-    <option name="LAST_COMMIT_MESSAGE" value="提交" />
+    <MESSAGE value="提交6" />
+    <MESSAGE value="提交7" />
+    <option name="LAST_COMMIT_MESSAGE" value="提交7" />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1603031397438">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1603031397438" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1609067634234">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1609070831681">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1609067634234" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1609070831681" />
   </component>
 </project>
